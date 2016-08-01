@@ -2,13 +2,11 @@
   System.config({
     map: {
       'app': '/app/js',
-      '@angular': '/app/js/lib/angular',
-      'rxjs': '/app/js/lib/rxjs',
+      '@angular': '/app/js/lib/angular'
     },
     packages: {
       'app': {defaultExtension: 'js' },
-      '@angular': { defaultExtension: 'umd.min.js' },
-      'rxjs': { defaultExtension: 'js' },
+      '@angular': { defaultExtension: 'umd.min.js' }
     },
   });
 })(this);

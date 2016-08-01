@@ -1,6 +1,7 @@
 package main
 
 import (
+	"blog/controller"
 	"os"
 	"path/filepath"
 
@@ -10,10 +11,6 @@ import (
 )
 
 func main() {
-	start()
-}
-
-func start() {
 	var app, err = web.NewWebApp(filepath.Dir(os.Args[0]), "web.cfg", Router())
 	if err != nil {
 		panic(err)
@@ -24,5 +21,7 @@ func start() {
 
 func Router() router.Router {
 	var root = web.NewRootRouter()
+	var s = web.NewControllerRouter(new(controller.HomeController))
+	root.AddChild(s)
 	return root
 }

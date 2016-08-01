@@ -9,7 +9,7 @@ class Artical {
 
 @Component({
   selector: 'my-app',
-  template: '<div #markdown class="markdown-body" [innerHtml]="at.content"></div>'
+  template: '<article><div #markdown class="markdown-body" [innerHtml]="at.content"></div></article>'
 })
 export class AppComponent {
   @ViewChild("markdown")

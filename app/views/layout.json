@@ -1,0 +1,8 @@
+{
+	"LayoutMap":{
+		"Default":"layout/layout.html"
+	},
+	"DefaultLayout":"Default",
+	"LayoutSpec":{
+	}
+}
