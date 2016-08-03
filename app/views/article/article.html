@@ -1,7 +1,12 @@
 {{define "Head"}}
+<title>Kira的博客</title>
+{{end}}
+{{define "HeadScript"}}
 <link rel="stylesheet" href="/css/markdown.css"/>
 <link rel="stylesheet" href="/css/highlight/github-gist.css"/>
 <link rel="stylesheet" href="/css/code.css"/>
+{{end}}
+{{define "FootScript"}}
 <script src="/js/lib/highlight.pack.js"></script>
 <script src="/js/lib/showdown.min.js"></script>
 <script>
@@ -23,7 +28,9 @@
       }
     })
 </script>
-{{end}} 
+{{end}}
+
+
 {{define "Content"}}
 <h1>文章标题</h1><hr/>
 <article class="markdown-body">
@@ -63,8 +70,8 @@ func main() {
 }
 ```
 </article>
-<p/>
-<p/>
+<p></p>
+<p></p>
 <div class="alert alert-success" role="alert">本文遵循XXX</div>
 <h3>评论列表</h3>
 <div class="reply">

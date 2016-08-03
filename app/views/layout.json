@@ -1,8 +1,10 @@
 {
-	"LayoutMap":{
-		"Default":"layout/layout.html"
+	"LayoutMap": {
+		"Main": "layout/main.html",
+		"Top": "layout/top.html"
 	},
-	"DefaultLayout":"Default",
-	"LayoutSpec":{
+	"DefaultLayout": "Main",
+	"LayoutSpec": {
+		"layout/main.html": "Top"
 	}
 }
