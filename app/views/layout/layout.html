@@ -2,8 +2,92 @@
 <html>
     <head>
         <title>{{.SiteName}}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/index.css" /> 
+
+        <script src="/js/lib/jquery.min.js"></script>
+        <script src="/js/lib/bootstrap.min.js"></script>
+        {{template "Head" .}}
     </head>
     <body>
-        {{template "Content" .}}
+        <nav class="navbar navbar-fixed-top navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                        aria-controls="navbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Kira的博客</a>
+                    
+                </div>
+                <div id="navbar" class="collapse navbar-collapse navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#contact">登录</a></li>
+                        <li><a href="#contact">注册</a></li>
+                        <hr/>
+                        <li class="visible-xs"><a href="#contact">列表</a></li>
+                        <li class="visible-xs"><a href="#contact">列表</a></li>
+                        <li class="visible-xs"><a href="#contact">列表</a></li>
+                        <li class="visible-xs"><a href="#contact">列表</a></li>
+                        <li class="visible-xs"><a href="#contact">列表</a></li>
+                        <li class="visible-xs"><a href="#contact">列表</a></li>
+                        <li class="visible-xs"><a href="#contact">列表</a></li>
+                        <li class="visible-xs"><a href="#contact">列表</a></li>
+                        <li class="visible-xs"><a href="#contact">列表</a></li>
+                        <li class="visible-xs"><a href="#contact">列表</a></li>
+                        <li class="visible-xs"><a href="#contact">列表</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 hidden-xs">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">文章分类</div>
+                        <div class="category panel-body">
+                            <ul class="list-unstyled">
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">最新文章</div>
+                        <div class="article panel-body">
+                            <ul class="list-unstyled">
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">最新回复</div>
+                        <div class="reply panel-body">
+                            <ul class="list-unstyled">
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                                <li><a>列表</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                     {{template "Content" .}}
+                </div>
+            </div>
+        </div>
+        <footer>备案号</footer>
     </body>
 </html>

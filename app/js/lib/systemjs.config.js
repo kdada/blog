@@ -1,8 +1,8 @@
 (function (global) {
   System.config({
     map: {
-      'app': '/app/js',
-      '@angular': '/app/js/lib/angular'
+      'app': '/js',
+      '@angular': '/js/lib/angular'
     },
     packages: {
       'app': {defaultExtension: 'js' },
