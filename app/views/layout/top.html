@@ -10,6 +10,9 @@
 </head>
 
 <body>
+    {{.SESSION.SetDefault "Login" false}}
+    {{$login := .SESSION.Bool "Login"}}
+    {{if not $login}}
     <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="loginLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -31,7 +34,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">登录</button>
+                    <button id ="loginButton" type="button" class="btn btn-primary">登录</button>
                 </div>
             </div>
         </div>
@@ -70,6 +73,7 @@
             </div>
         </div>
     </div>
+    {{end}}
     <nav class="navbar navbar-fixed-top navbar-inverse">
         <div class="container">
             <div class="navbar-header">
@@ -84,19 +88,43 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse navbar-right">
                 <ul class="nav navbar-nav">
+                    {{if not $login}}
                     <li><a href="#contact" data-toggle="modal" data-target="#Login">登录</a></li>
                     <li><a href="#contact" data-toggle="modal" data-target="#Register">注册</a></li>
+                    {{else}}
+                    {{$user := .SESSION.Value "User"}}
+                    <li><a>{{$user.Name}}</a></li>
+                    {{end}}
                     {{template "Nav" .}}
                 </ul>
             </div>
         </div>
     </nav>
-    {{template "MainArea"}}
+    {{template "MainArea" .}}
     <div class="container">
         <footer class="text-center">备案号</footer>
     </div> 
     <script src="/js/lib/jquery.min.js"></script>
     <script src="/js/lib/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){ 
+            $("#loginButton").click(function(){ 
+                $.ajax({
+                    url:"/home/login",
+                    type:"post",
+                    data:{
+                        "Email":$("#loginEmail").val(),
+                        "Password":$("#loginPassword").val(),
+                    },
+                    success:function(data){
+                        if (data && data.Code == 0) {
+
+                        }
+                    },
+                });
+            }); 
+        });
+    </script>
     {{template "FootScript" .}}
 </body>
 

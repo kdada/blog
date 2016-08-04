@@ -7,17 +7,9 @@
 {{define "Nav"}}
 <hr/>
 
-<li class="visible-xs"><a href="#contact">列表</a></li>
-<li class="visible-xs"><a href="#contact">列表</a></li>
-<li class="visible-xs"><a href="#contact">列表</a></li>
-<li class="visible-xs"><a href="#contact">列表</a></li>
-<li class="visible-xs"><a href="#contact">列表</a></li>
-<li class="visible-xs"><a href="#contact">列表</a></li>
-<li class="visible-xs"><a href="#contact">列表</a></li>
-<li class="visible-xs"><a href="#contact">列表</a></li>
-<li class="visible-xs"><a href="#contact">列表</a></li>
-<li class="visible-xs"><a href="#contact">列表</a></li>
-<li class="visible-xs"><a href="#contact">列表</a></li>
+{{range $k,$v := .Categories}}
+<li class="visible-xs"><a href="/c/{{$v.Id}}">{{$v.Name}}</a></li>
+{{end}}
 {{end}}
 {{define "MainArea"}}
 <div class="container">
@@ -27,11 +19,10 @@
                 <div class="panel-heading">文章分类</div>
                 <div class="category panel-body">
                     <ul class="list-unstyled">
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
+                        
+                        {{range $k,$v := .Categories}}
+                        	<li><a href="/c/{{$v.Id}}">{{$v.Name}}</a></li>
+                        {{end}}
                     </ul>
                 </div>
             </div>
@@ -39,11 +30,9 @@
                 <div class="panel-heading">最新文章</div>
                 <div class="article panel-body">
                     <ul class="list-unstyled">
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
+                        {{range $k,$v := .NewestArticles}}
+                        	<li><a href="/a/{{$v.Id}}">{{$v.Title}}</a></li>
+                        {{end}}
                     </ul>
                 </div>
             </div>
@@ -51,11 +40,9 @@
                 <div class="panel-heading">最新回复</div>
                 <div class="reply panel-body">
                     <ul class="list-unstyled">
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
-                        <li><a>列表</a></li>
+                        {{range $k,$v := .NewestReplies}}
+                        	<li><a href="/a/{{$v.Article}}#r{{$v.Id}}">{{$v.Content}}</a></li>
+                        {{end}}
                     </ul>
                 </div>
             </div>
