@@ -21,6 +21,7 @@
                     <h4 class="modal-title" id="loginLabel">登录</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-danger hidden" role="alert" id="loginError"></div>
                     <form>
                         <div class="form-group">
                             <label for="loginEmail">邮箱:</label>
@@ -47,6 +48,7 @@
                     <h4 class="modal-title" id="registerLabel">注册</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-danger hidden" role="alert" id="regError"></div>
                     <form>
                         <div class="form-group">
                             <label for="regEmail">邮箱:</label>
@@ -68,7 +70,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">注册</button>
+                    <button id ="regButton" type="button" class="btn btn-primary">注册</button>
                 </div>
             </div>
         </div>
@@ -106,25 +108,7 @@
     </div> 
     <script src="/js/lib/jquery.min.js"></script>
     <script src="/js/lib/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function(){ 
-            $("#loginButton").click(function(){ 
-                $.ajax({
-                    url:"/home/login",
-                    type:"post",
-                    data:{
-                        "Email":$("#loginEmail").val(),
-                        "Password":$("#loginPassword").val(),
-                    },
-                    success:function(data){
-                        if (data && data.Code == 0) {
-
-                        }
-                    },
-                });
-            }); 
-        });
-    </script>
+    <script src="/js/index/user.js"></script>
     {{template "FootScript" .}}
 </body>
 

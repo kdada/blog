@@ -2,8 +2,8 @@ package model
 
 // 用户登录模型
 type UserLogin struct {
-	Email    string `!;/\w+[.\w]*@\w+(.\w+)+/` //邮箱
-	Password string `!;len>=6&&len<=15`        //密码
+	Email    string `!;/\w+[\.\w]*@\w+(\.\w+)+/` //邮箱
+	Password string `!;len>=6&&len<=15`          //密码
 }
 
 // 用户注册模型
@@ -17,4 +17,10 @@ type UserInfo struct {
 	Id    int    //用户id
 	Name  string //用户昵称
 	Email string //用户邮箱
+}
+
+// 用户记录
+type User struct {
+	UserInfo
+	Password string
 }
