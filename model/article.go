@@ -20,8 +20,8 @@ type Article struct {
 
 func NewArticle(id int, title string) *Article {
 	return &Article{
-		1,
-		"魔性文章1",
+		id,
+		title,
 		"",
 		"",
 		time.Now(),

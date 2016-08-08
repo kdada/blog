@@ -11,9 +11,8 @@ type UserController struct {
 	Context *web.Context
 }
 
-func (this *UserController) Login(m *model.UserLogin) web.PostResult {
-	var s = new(service.UserService)
-	var userInfo, err = s.Login(m)
+func (this *UserController) Login(m *model.UserLogin, userService *service.UserService) web.PostResult {
+	var userInfo, err = userService.Login(m)
 	if err != nil {
 		return this.Context.Api(model.NewFailureResult(1, err.Error()))
 	}
@@ -22,9 +21,8 @@ func (this *UserController) Login(m *model.UserLogin) web.PostResult {
 	return this.Context.Api(model.NewSuccessResult(userInfo))
 }
 
-func (this *UserController) Register(m *model.UserRegister) web.PostResult {
-	var s = new(service.UserService)
-	var err = s.Register(m)
+func (this *UserController) Register(m *model.UserRegister, userService *service.UserService) web.PostResult {
+	var err = userService.Register(m)
 	if err != nil {
 		return this.Context.Api(model.NewFailureResult(1, err.Error()))
 	}

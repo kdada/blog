@@ -20,6 +20,7 @@ func (this *ArticleService) NewestArticles() ([]*model.Article, error) {
 		model.NewArticle(1, "魔性文章1"),
 		model.NewArticle(2, "魔性文章2"),
 		model.NewArticle(3, "魔性文章3"),
+		model.NewArticle(3, "魔性文章4"),
 	}, nil
 }
 
