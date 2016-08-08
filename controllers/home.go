@@ -1,14 +1,14 @@
-package controller
+package controllers
 
 import (
-	"blog/service"
+	"blog/services"
 
 	"github.com/kdada/tinygo/web"
 )
 
 type HomeController struct {
 	Context        *web.Context
-	ArticleService *service.ArticleService
+	ArticleService *services.ArticleService
 }
 
 func (this *HomeController) Index() web.GetResult {

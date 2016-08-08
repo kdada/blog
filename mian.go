@@ -1,8 +1,8 @@
 package main
 
 import (
-	"blog/controller"
-	"blog/model"
+	"blog/controllers"
+	"blog/models"
 	"mime"
 	"os"
 	"path/filepath"
@@ -25,8 +25,8 @@ func main() {
 
 func Router() router.Router {
 	var root = web.NewRootRouter()
-	root.AddChild(web.NewControllerRouter(new(controller.HomeController)))
-	root.AddChild(web.NewControllerRouter(new(controller.UserController)))
+	root.AddChild(web.NewControllerRouter(new(controllers.HomeController)))
+	root.AddChild(web.NewControllerRouter(new(controllers.UserController)))
 	return root
 }
 
@@ -42,7 +42,7 @@ func (this *Event) Request(processor *web.HttpProcessor, context *web.Context) {
 // 出现错误时触发
 func (this *Event) Error(processor *web.HttpProcessor, context *web.Context, err error) {
 	if context != nil {
-		var err = context.WriteResult(context.Api(model.NewFailureResult(1, err.Error())))
+		var err = context.WriteResult(context.Api(models.NewFailureResult(1, err.Error())))
 		if err != nil {
 			processor.Logger.Error(err)
 		}
