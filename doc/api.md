@@ -56,7 +56,7 @@
   
   
   
-### URL: /c(:id)[/p(:page).html]  
+### URL: /c(:Id)[/p(:Page).html]  
 方法: GET  
 描述: 分类页面  
 传入参数:   
@@ -77,7 +77,7 @@ Page | int | false | 1 | 页码,如果不传该参数则默认为0
   
   
   
-### URL: /a(:id).html  
+### URL: /a(:Id).html  
 方法: GET  
 描述: 文章页面  
 传入参数:   
@@ -97,7 +97,7 @@ Id | int | true | 1 | 文章id
   
   
   
-### URL: /img/(:name).jpg  
+### URL: /img/(:Name).jpg  
 方法: GET  
 描述: 图片  
 传入参数:   
