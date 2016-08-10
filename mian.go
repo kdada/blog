@@ -9,10 +9,16 @@ import (
 
 	"github.com/kdada/tinygo"
 	"github.com/kdada/tinygo/router"
+	"github.com/kdada/tinygo/sql"
 	"github.com/kdada/tinygo/web"
+	_ "github.com/lib/pq"
 )
 
 func main() {
+	var e = sql.RegisterDefaultDB("postgres", "user=blog dbname=blog host=127.0.0.1 sslmode=disable", 100)
+	if e != nil {
+		panic(e)
+	}
 	mime.AddExtensionType(".apk", "application/vnd.android.package-archive")
 	var app, err = web.NewWebApp(filepath.Dir(os.Args[0]), "web.cfg", Router())
 	if err != nil {

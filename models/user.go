@@ -1,5 +1,9 @@
 package models
 
+import (
+	"time"
+)
+
 // 用户登录模型
 type UserLogin struct {
 	Email    string `!;/\w+[\.\w]*@\w+(\.\w+)+/` //邮箱
@@ -22,5 +26,8 @@ type UserInfo struct {
 // 用户记录
 type User struct {
 	UserInfo
-	Password string
+	Password   string
+	CreateTime time.Time
+	Status     int
+	Reason     string
 }
