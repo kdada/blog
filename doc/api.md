@@ -10,9 +10,9 @@
 ---|:-:|:-:|---
 / | GET | false | 首页
 /index.html | GET | false | 首页,等同于/
-/c(:id)[/p(:page).html] | GET | false | 分类页面
-/a(:id).html | GET | false | 文章页面
-/img/(:name).jpg | GET | false | 获取图片
+/c(:Id)[/p(:Page).html] | GET | false | 分类页面
+/a(:Id).html | GET | false | 文章页面
+/img/(:Name).jpg | GET | false | 获取图片
 /manager | GET | true | 管理页面,仅限管理员访问
 /user/login | POST | false | 用户登录
 /user/register | POST | false | 用户注册
@@ -63,8 +63,8 @@
 
 字段 | 类型 | 必须 | 例子 | 描述
 ---|---|---|---|---
-id | int | true | 1 | 分类id
-page | int | false | 1 | 页码,如果不传该参数则默认为0
+Id | int | true | 1 | 分类id
+Page | int | false | 1 | 页码,如果不传该参数则默认为0
 
 正确返回:  
 ```
@@ -84,7 +84,7 @@ page | int | false | 1 | 页码,如果不传该参数则默认为0
 
 字段 | 类型 | 必须 | 例子 | 描述
 ---|---|---|---|---
-id | int | true | 1 | 文章id
+Id | int | true | 1 | 文章id
 
 正确返回:  
 ```
@@ -104,7 +104,7 @@ id | int | true | 1 | 文章id
 
 字段 | 类型 | 必须 | 例子 | 描述
 ---|---|---|---|---
-name | string | true | logo | 图片名称
+Name | string | true | logo | 图片名称
 
 正确返回:  
 ```
