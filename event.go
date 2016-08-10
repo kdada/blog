@@ -6,6 +6,7 @@ import (
 	"github.com/kdada/tinygo/web"
 )
 
+// Processor 事件
 type Event struct {
 	web.DefaultHttpProcessorEvent
 }

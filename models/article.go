@@ -18,6 +18,7 @@ type Article struct {
 	UpdateTime time.Time //更新时间
 }
 
+// NewArticle 创建文章
 func NewArticle(id int, title string) *Article {
 	return &Article{
 		id,
@@ -40,6 +41,7 @@ type Reply struct {
 	CreateTime time.Time //回复时间
 }
 
+// NewReply 创建回复
 func NewReply(id int, content string) *Reply {
 	return &Reply{
 		Id:      id,

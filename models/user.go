@@ -26,8 +26,8 @@ type UserInfo struct {
 // 用户记录
 type User struct {
 	UserInfo
-	Password   string
-	CreateTime time.Time
-	Status     int
-	Reason     string
+	Password   string    //用户密码
+	CreateTime time.Time //注册时间
+	Status     int       //状态
+	Reason     string    //状态原因
 }

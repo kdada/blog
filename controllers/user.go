@@ -7,10 +7,12 @@ import (
 	"github.com/kdada/tinygo/web"
 )
 
+// 用户控制器
 type UserController struct {
 	Context *web.Context
 }
 
+// Login 用户登录
 func (this *UserController) Login(m *models.UserLogin, userService *services.UserService) web.PostResult {
 	var userInfo, err = userService.Login(m)
 	if err != nil {
@@ -21,6 +23,7 @@ func (this *UserController) Login(m *models.UserLogin, userService *services.Use
 	return this.Context.Api(models.NewSuccessResult(userInfo))
 }
 
+// Register 用户注册
 func (this *UserController) Register(m *models.UserRegister, userService *services.UserService) web.PostResult {
 	var err = userService.Register(m)
 	if err != nil {

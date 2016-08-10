@@ -5,6 +5,7 @@
 	},
 	"DefaultLayout": "Main",
 	"LayoutSpec": {
-		"layout/main.html": "Top"
+		"layout/main.html": "Top",
+		"manager/":""
 	}
 }
