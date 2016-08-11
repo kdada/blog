@@ -19,7 +19,7 @@ func (this *Event) Request(processor *web.HttpProcessor, context *web.Context) {
 // 出现错误时触发
 func (this *Event) Error(processor *web.HttpProcessor, context *web.Context, err error) {
 	if context != nil {
-		var err = context.WriteResult(context.Api(models.NewFailureResult(1, err.Error())))
+		var err = context.WriteResult(context.Api(models.NewErrorResult(err)))
 		if err != nil {
 			processor.Logger.Error(err)
 		}

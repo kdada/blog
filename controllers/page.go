@@ -6,17 +6,24 @@ import (
 	"github.com/kdada/tinygo/web"
 )
 
+// 服务打包
+type ServicePackage struct {
+	ArticleService  *services.ArticleService  //文章服务
+	CategoryService *services.CategoryService // 分类服务
+	ReplyService    *services.ReplyService    // 回复服务
+}
+
 // layoutViewData 返回布局用的数据
-func layoutViewData(articleService *services.ArticleService) (web.ViewData, error) {
-	var c, err = articleService.Categories()
+func layoutViewData(pkg *ServicePackage) (web.ViewData, error) {
+	var c, err = pkg.CategoryService.Categories()
 	if err != nil {
 		return nil, err
 	}
-	var a, err1 = articleService.NewestArticles()
+	var a, err1 = pkg.ArticleService.NewestArticles()
 	if err1 != nil {
 		return nil, err1
 	}
-	var r, err2 = articleService.NewestReplies()
+	var r, err2 = pkg.ReplyService.NewestReplies()
 	if err2 != nil {
 		return nil, err2
 	}
@@ -24,8 +31,8 @@ func layoutViewData(articleService *services.ArticleService) (web.ViewData, erro
 }
 
 // Index 首页
-func Index(context *web.Context, articleService *services.ArticleService) web.GetResult {
-	var d, err = layoutViewData(articleService)
+func Index(context *web.Context, pkg *ServicePackage) web.GetResult {
+	var d, err = layoutViewData(pkg)
 	if err != nil {
 		context.Processor.Logger.Error(err.Error())
 		return context.NotFound()
@@ -34,11 +41,11 @@ func Index(context *web.Context, articleService *services.ArticleService) web.Ge
 }
 
 // Article 文章
-func Article(context *web.Context, articleService *services.ArticleService, param struct {
+func Article(context *web.Context, pkg *ServicePackage, param struct {
 	Id int `!;>0`
 }) web.GetResult {
 	context.Processor.Logger.Debug(param)
-	var d, err = layoutViewData(articleService)
+	var d, err = layoutViewData(pkg)
 	if err != nil {
 		context.Processor.Logger.Error(err.Error())
 		return context.NotFound()
@@ -47,12 +54,12 @@ func Article(context *web.Context, articleService *services.ArticleService, para
 }
 
 // Category 分类列表
-func Category(context *web.Context, articleService *services.ArticleService, param struct {
+func Category(context *web.Context, pkg *ServicePackage, param struct {
 	Id   int `!;>0`
 	Page int `?;>=0`
 }) web.GetResult {
 	context.Processor.Logger.Debug(param)
-	var d, err = layoutViewData(articleService)
+	var d, err = layoutViewData(pkg)
 	if err != nil {
 		context.Processor.Logger.Error(err.Error())
 		return context.NotFound()
