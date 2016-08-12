@@ -8,7 +8,7 @@
 <hr/>
 
 {{range $k,$v := .Categories}}
-<li class="visible-xs"><a href="/c/{{$v.Id}}">{{$v.Name}}</a></li>
+<li class="visible-xs"><a href="/c{{$v.Id}}">{{$v.Name}}</a></li>
 {{end}}
 {{end}}
 {{define "MainArea"}}
@@ -21,7 +21,7 @@
                     <ul class="list-unstyled">
                         
                         {{range $k,$v := .Categories}}
-                        	<li><a href="/c/{{$v.Id}}">{{$v.Name}}</a></li>
+                        	<li><a href="/c{{$v.Id}}">{{$v.Name}}</a></li>
                         {{end}}
                     </ul>
                 </div>
@@ -31,17 +31,19 @@
                 <div class="article panel-body">
                     <ul class="list-unstyled">
                         {{range $k,$v := .NewestArticles}}
-                        	<li><a href="/a/{{$v.Id}}">{{$v.Title}}</a></li>
+                        	<li><a href="/a{{$v.Id}}.html">{{$v.Title}}</a></li>
                         {{end}}
                     </ul>
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading">最新回复</div>
+                <div class="panel-heading">最新评论</div>
                 <div class="reply panel-body">
                     <ul class="list-unstyled">
                         {{range $k,$v := .NewestReplies}}
-                        	<li><a href="/a/{{$v.Article}}#r{{$v.Id}}">{{$v.Content}}</a></li>
+                        	<li>{{$v.Name}} 评论了 
+                                <a href="/a{{$v.Article}}.html">{{$v.Title}}</a><br/>
+                                <a href="/a{{$v.Article}}.html#r{{$v.Id}}">{{$v.Content}}</a></li>
                         {{end}}
                     </ul>
                 </div>

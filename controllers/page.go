@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"blog/services"
+	"strconv"
 
 	"github.com/kdada/tinygo/web"
 )
@@ -10,7 +11,7 @@ import (
 type ServicePackage struct {
 	ArticleService  *services.ArticleService  //文章服务
 	CategoryService *services.CategoryService // 分类服务
-	ReplyService    *services.ReplyService    // 回复服务
+	ReplyService    *services.ReplyService    // 评论服务
 }
 
 // layoutViewData 返回布局用的数据
@@ -31,12 +32,104 @@ func layoutViewData(pkg *ServicePackage) (web.ViewData, error) {
 }
 
 // Index 首页
-func Index(context *web.Context, pkg *ServicePackage) web.GetResult {
+func Index(context *web.Context, pkg *ServicePackage, param struct {
+	Page int `?;>0`
+}) web.GetResult {
 	var d, err = layoutViewData(pkg)
 	if err != nil {
 		context.Processor.Logger.Error(err.Error())
 		return context.NotFound()
 	}
+	var page, err4 = pkg.ArticleService.Page()
+	if err4 != nil {
+		context.Processor.Logger.Error(err4.Error())
+		return context.NotFound()
+	}
+	d["ArticlePage"] = page
+	if page > 0 {
+		if param.Page < 1 {
+			param.Page = 1
+		}
+		var replies, err5 = pkg.ArticleService.Articles(param.Page)
+		if err5 != nil {
+			context.Processor.Logger.Error(err5.Error())
+			return context.NotFound()
+		}
+		d["Articles"] = replies
+	}
+	d["CurrentPage"] = param.Page
+	d["FirstUrl"] = "/"
+	d["Url"] = "/p"
+
+	// 计算页码
+	var start = param.Page - 3
+	if param.Page <= 3 {
+		start = 1
+	}
+	var end = start + 6
+	if page-start < 6 {
+		end = page
+	}
+
+	if start-1 > 6-(end-start) {
+		start = end - 6
+	} else {
+		start = 1
+	}
+	d["StartPage"] = start
+	d["PageLength"] = end - start + 1
+	return context.View("home/index.html", d)
+}
+
+// Category 分类列表
+func Category(context *web.Context, pkg *ServicePackage, param struct {
+	Id   int `!;>0`
+	Page int `?;>0`
+}) web.GetResult {
+	var d, err = layoutViewData(pkg)
+	if err != nil {
+		context.Processor.Logger.Error(err.Error())
+		return context.NotFound()
+	}
+	var page, err4 = pkg.ArticleService.CategoryPage(param.Id)
+	if err4 != nil {
+		context.Processor.Logger.Error(err4.Error())
+		return context.NotFound()
+	}
+	d["ArticlePage"] = page
+	if page > 0 {
+		if param.Page < 1 {
+			param.Page = 1
+		}
+		var replies, err5 = pkg.ArticleService.CategoryArticles(param.Id, param.Page)
+		if err5 != nil {
+			context.Processor.Logger.Error(err5.Error())
+			return context.NotFound()
+		}
+		d["Articles"] = replies
+	}
+	d["CurrentPage"] = param.Page
+	var base = "/c" + strconv.Itoa(param.Id)
+	d["FirstUrl"] = base
+	d["Url"] = base + "/p"
+
+	// 计算页码
+	var start = param.Page - 3
+	if param.Page <= 3 {
+		start = 1
+	}
+	var end = start + 6
+	if page-start < 6 {
+		end = page
+	}
+
+	if start-1 > 6-(end-start) {
+		start = end - 6
+	} else {
+		start = 1
+	}
+	d["StartPage"] = start
+	d["PageLength"] = end - start + 1
 	return context.View("home/index.html", d)
 }
 
@@ -50,21 +143,40 @@ func Article(context *web.Context, pkg *ServicePackage, param struct {
 		context.Processor.Logger.Error(err.Error())
 		return context.NotFound()
 	}
-	return context.View("article/article.html", d)
-}
-
-// Category 分类列表
-func Category(context *web.Context, pkg *ServicePackage, param struct {
-	Id   int `!;>0`
-	Page int `?;>=0`
-}) web.GetResult {
-	context.Processor.Logger.Debug(param)
-	var d, err = layoutViewData(pkg)
-	if err != nil {
-		context.Processor.Logger.Error(err.Error())
+	var article, e = pkg.ArticleService.Article(param.Id)
+	if e != nil {
+		context.Processor.Logger.Error(e.Error())
 		return context.NotFound()
 	}
-	return context.View("home/index.html", d)
+	d["Article"] = article
+	var pre, err2 = pkg.ArticleService.PreviousArticle(article.Id, article.Category)
+	if err2 != nil {
+		context.Processor.Logger.Error(err2.Error())
+		return context.NotFound()
+	}
+	d["PreArticle"] = pre
+	var next, err3 = pkg.ArticleService.NextArticle(article.Id, article.Category)
+	if err3 != nil {
+		context.Processor.Logger.Error(err3.Error())
+		return context.NotFound()
+	}
+	d["NextArticle"] = next
+
+	var page, err4 = pkg.ReplyService.Page(article.Id)
+	if err4 != nil {
+		context.Processor.Logger.Error(err4.Error())
+		return context.NotFound()
+	}
+	d["ReplyPage"] = page
+	if page > 0 {
+		var replies, err5 = pkg.ReplyService.Replies(article.Id, 1)
+		if err5 != nil {
+			context.Processor.Logger.Error(err5.Error())
+			return context.NotFound()
+		}
+		d["Replies"] = replies
+	}
+	return context.View("article/article.html", d)
 }
 
 // Manager 管理后台页面

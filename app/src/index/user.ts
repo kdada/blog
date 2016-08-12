@@ -1,5 +1,6 @@
 
 
+// Login 登录
 function Login() {
     $.ajax({
         url: "/user/login",
@@ -20,6 +21,7 @@ function Login() {
     })
 }
 
+// Register 注册
 function Register() {
     $.ajax({
         url: "/user/register",

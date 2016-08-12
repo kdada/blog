@@ -4,29 +4,40 @@
 {{end}}
 
 {{define "Content"}}
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><a href="/a1.html">单击此处标题查看文章内容</a></h3>
-  </div>
-  <div class="panel-body">
-    文章内容
-  </div>
-  <div class="panel-footer">发布日期</div>
+<div>
+  {{if gt .ArticlePage 0}}
+    {{range .Articles}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><a href="/a{{.Id}}.html">{{.Title}}</a></h3>
+      </div>
+      <div class="panel-body">
+        {{.Summary}}
+      </div>
+      <div class="panel-footer">发表时间:{{time .CreateTime}}</div>
+    </div>
+    {{end}}
+  {{else}}
+    <div class="well">
+      暂无文章
+    </div>
+  {{end}}
 </div>
+
+
 <nav class="text-center">
   <ul class="pagination">
-    <li class="disabled">
-      <a href="#" aria-label="Previous">
+    <li {{if eq .CurrentPage 1}}class="disabled"{{end}}>
+      <a href="{{.FirstUrl}}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
+    {{$G := .}}
+    {{range $k,$v := until .PageLength}}
+    <li><a href="{{$G.Url}}{{$G.StartPage}}.html">{{$v}}</a></li>
+    {{end}}
+    <li {{if eq .CurrentPage .ArticlePage}}class="disabled"{{end}}>
+      <a href="{{.Url}}{{.ArticlePage}}.html" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
