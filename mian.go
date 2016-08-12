@@ -14,7 +14,7 @@ import (
 // prepare 在启动前做一些准备操作
 func prepare() {
 	// 注册postgresql数据库 127.0.0.1:5432
-	var e = sql.RegisterDefaultDB("postgres", "user=blog dbname=blog host=127.0.0.1 sslmode=disable", 100)
+	var e = sql.RegisterDefaultDB("postgres", "user=blog password=blog dbname=blog host=127.0.0.1 sslmode=disable", 100)
 	if e != nil {
 		panic(e)
 	}

@@ -4,27 +4,20 @@
 {{end}}
 
 {{define "Content"}}
+{{if gt .ArticlePage 0}}
 <div>
-  {{if gt .ArticlePage 0}}
-    {{range .Articles}}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><a href="/a{{.Id}}.html">{{.Title}}</a></h3>
-      </div>
-      <div class="panel-body">
-        {{.Summary}}
-      </div>
-      <div class="panel-footer">发表时间:{{time .CreateTime}}</div>
+  {{range .Articles}}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><a href="/a{{.Id}}.html">{{.Title}}</a></h3>
     </div>
-    {{end}}
-  {{else}}
-    <div class="well">
-      暂无文章
+    <div class="panel-body">
+      {{.Summary}}
     </div>
+    <div class="panel-footer">发表时间:{{time .CreateTime}}</div>
+  </div>
   {{end}}
 </div>
-
-
 <nav class="text-center">
   <ul class="pagination">
     <li {{if eq .CurrentPage 1}}class="disabled"{{end}}>
@@ -43,4 +36,9 @@
     </li>
   </ul>
 </nav>
+{{else}}
+  <div class="well">
+    暂无文章
+  </div>
+{{end}}
 {{end}}
