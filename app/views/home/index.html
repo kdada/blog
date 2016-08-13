@@ -3,6 +3,18 @@
 <title>Kira的博客</title>
 {{end}}
 
+{{define "HeadScript"}}
+<link rel="stylesheet" href="/css/markdown.css"/>
+<link rel="stylesheet" href="/css/highlight/github-gist.css"/>
+{{end}}
+
+{{define "FootScript"}}
+<script src="/js/lib/highlight.pack.js"></script>
+<script src="/js/lib/showdown.min.js"></script>
+<script src="/js/index/markdown.js"></script>
+{{end}}
+
+
 {{define "Content"}}
 {{if gt .ArticlePage 0}}
 <div>
@@ -11,9 +23,7 @@
     <div class="panel-heading">
       <h3 class="panel-title">{{if .IsTop}}<span class="glyphicon glyphicon-fire"></span>{{end}}<a href="/a{{.Id}}.html"> {{.Title}}</a></h3>
     </div>
-    <div class="panel-body">
-      {{.Summary}}
-    </div>
+    <div class="panel-body article-summary">{{.Summary}}</div>
     <div class="panel-footer">发表时间:{{time .CreateTime}}</div>
   </div>
   {{end}}

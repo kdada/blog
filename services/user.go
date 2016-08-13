@@ -18,6 +18,11 @@ func NewUserService() *UserService {
 	}
 }
 
+// IsAdmin 返回指定id的用户是否是管理员
+func (this *UserService) IsAdmin(id int) bool {
+	return id == 1
+}
+
 // Register 注册用户
 func (this *UserService) Register(email, name, password string) error {
 	var id int

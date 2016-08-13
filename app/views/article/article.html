@@ -38,13 +38,13 @@
     <li>版权声明：<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">自由转载-非商用-非衍生-保持署名(CC 3.0)</a></li>
   </ul>
 </div>
-<h3>评论列表</h3>
+<div class="h3">评论列表 <button class="btn btn-default  btn-xs" data-toggle="modal" data-target="#Reply">发表评论</button></div>
 <div class="reply">
   {{if gt .ReplyPage 0}}
   <div class="reply-content">
     {{range .Replies}}
     <div class="well">
-      <h5 class="media-heading">{{.Floor}}楼 {{time .CreateTime}}</h5>
+     <div id="r{{.Floor}}" class="media-heading h5">{{.Floor}}楼 {{time .CreateTime}}  <!--<button class="btn btn-default  btn-xs">回复</button> --></div>
       <h5 class="media-heading">{{.Name}}:</h5>
       {{.Content}}
     </div>
@@ -59,5 +59,33 @@
       暂无评论
     </div>
   {{end}}
+</div>
+
+
+
+<div class="modal fade" id="Reply" tabindex="-1" role="dialog" aria-labelledby="ReplyLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="ReplyLabel">发表评论</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger hidden" role="alert" id="loginError"></div>
+        <form>
+          <div class="form-group">
+            <textarea type="text" class="form-control" id="replyContent"></textarea>
+          </div>
+          <div class="form-group">
+            <input type="hidden" class="form-control" id="replyId"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button id="replyButton" type="button" class="btn btn-primary">发表</button>
+      </div>
+    </div>
+  </div>
 </div>
 {{end}}
