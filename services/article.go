@@ -46,10 +46,10 @@ func (this *ArticleService) Page() (int, error) {
 func (this *ArticleService) Articles(page int) ([]*models.ArticleSummary, error) {
 	var v []*models.ArticleSummary
 	var _, err = this.db.Query(`
-select * 
+select * ,top > 0 as is_top,left(content,100) as summary
 from article 
 where status = 1 
-order by top,create_time desc 
+order by top desc,create_time desc 
 offset $1
 limit $2`, (page-1)*10, 10).Scan(&v)
 	if err == nil {
@@ -76,10 +76,10 @@ func (this *ArticleService) CategoryPage(category int) (int, error) {
 func (this *ArticleService) CategoryArticles(category int, page int) ([]*models.ArticleSummary, error) {
 	var v []*models.ArticleSummary
 	var _, err = this.db.Query(`
-select * 
+select * ,top > 0 as is_top,left(content,100) as summary
 from article 
 where status = 1 and category = $1 
-order by top,create_time desc 
+order by top desc,create_time desc 
 offset $2
 limit $3`, category, (page-1)*10, 10).Scan(&v)
 	if err == nil {

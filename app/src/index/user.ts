@@ -1,5 +1,17 @@
 
 
+// 邮箱校验
+var emailRegexp = /\w+[\.\w]*@\w+(\.\w+)+/
+function EmailChaned() {
+    var v:string = $(this).val()
+    if (emailRegexp.test(v) && v.length <= 100) {
+        $(this).data("valid",true)
+    } else {
+        $(this).data("valid",false)
+    }
+}
+
+
 // Login 登录
 function Login() {
     $.ajax({
@@ -46,6 +58,7 @@ function Register() {
 }
 
 $(document).ready(function () {
+    $("#loginEmail").change(EmailChaned)
     $("#loginButton").click(Login)
     $("#regButton").click(Register)
 })

@@ -6,7 +6,7 @@
 [可选的] 
 (:参数名)   
 ```
- URL | 方法 | 仅管理员可用 | 描述
+ URL | 方法 | 仅管理员可用 | 概述
 ---|:-:|:-:|---
 / | GET | false | 首页
 /index.html | GET | false | 首页,等同于/
@@ -31,8 +31,8 @@
 /article/delete | POST | true | 删除文章
 /article/top | POST | true | 置顶文章
 /article/list | POST | true | 查看分类下的文章列表
-/reply/new | POST | false | 回复
-/reply/list | POST | false | 获取回复列表
+/reply/new | POST | false | 评论
+/reply/list | POST | false | 获取评论列表
   
   
   
@@ -182,11 +182,6 @@ Password | string | true | 123456 | 用户密码,最短6个字符,最长20个字
 ```
 {
     Code:   int     //状态码,为0
-    Data: {
-        Id:     int     //用户id
-        Name:   string  //用户昵称
-        Email:  string  //用户邮箱
-    }
 }
 ```
 错误返回:  
@@ -648,21 +643,21 @@ Page | int | true | 0 | 页码
   
 ### URL: /reply/new
 方法: POST  
-描述: 创建回复  
+描述: 创建评论  
 传入参数:   
 
 字段 | 类型 | 必须 | 例子 | 描述
 ---|---|---|---|---
 Article | int | true | 1 | 文章id
-Reply | int | false | 2 | 回复的回复id
-Content | string | true | 回复内容 | 回复内容
+Reply | int | false | 2 | 评论的评论id
+Content | string | true | 评论内容 | 评论内容
 
 正确返回:  
 ```
 {
     Code:   int     //状态码,为0
     Data: {
-        Id:     int     //回复id
+        Id:     int     //评论id
     }
 }
 ```
@@ -679,7 +674,7 @@ Content | string | true | 回复内容 | 回复内容
   
 ### URL: /reply/list
 方法: POST  
-描述: 置顶文章  
+描述: 获取文章评论列表,按楼层倒序排列  
 传入参数:   
 
 字段 | 类型 | 必须 | 例子 | 描述
@@ -694,10 +689,12 @@ Page | int | true | 1 | 页码,每页10条
     Data: {
         TotlePage: int //总页数
         Replies:[{
-            Id:         int     //回复id
-            Reply:      int     //回复的回复id
-            Name:       string  //回复的回复人昵称
-            CreateTime: string  //回复时间
+            Id:         int     //评论id
+            Account:    int     //评论者id
+            Name:       string  //评论者昵称
+            Content:    string  //评论内容
+            CreateTime: string  //评论时间
+            Floor:      int     //评论楼层
         }]
     }
 }

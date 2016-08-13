@@ -9,7 +9,7 @@
   {{range .Articles}}
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><a href="/a{{.Id}}.html">{{.Title}}</a></h3>
+      <h3 class="panel-title">{{if .IsTop}}<span class="glyphicon glyphicon-fire"></span>{{end}}<a href="/a{{.Id}}.html"> {{.Title}}</a></h3>
     </div>
     <div class="panel-body">
       {{.Summary}}
@@ -21,16 +21,19 @@
 <nav class="text-center">
   <ul class="pagination">
     <li {{if eq .CurrentPage 1}}class="disabled"{{end}}>
-      <a href="{{.FirstUrl}}" aria-label="Previous">
+      <a href="{{if eq .CurrentPage 1}}javascript:void(0);{{else}}{{.FirstUrl}}{{end}}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
     {{$G := .}}
     {{range $k,$v := until .PageLength}}
-    <li><a href="{{$G.Url}}{{$G.StartPage}}.html">{{$v}}</a></li>
+        {{$v := add $v $G.StartPage}}
+        {{$first := eq $v 1}}
+        {{$current := eq $v $G.CurrentPage}}
+    <li {{if $current}}class="active"{{end}}><a href="{{if $current}}javascript:void(0);{{else if $first}}{{$G.FirstUrl}}{{else}}{{$G.Url}}{{$v}}.html{{end}}">{{$v}}</a></li>
     {{end}}
     <li {{if eq .CurrentPage .ArticlePage}}class="disabled"{{end}}>
-      <a href="{{.Url}}{{.ArticlePage}}.html" aria-label="Next">
+      <a href="{{if eq .CurrentPage .ArticlePage}}javascript:void(0);{{else}}{{.Url}}{{.ArticlePage}}.html{{end}}" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

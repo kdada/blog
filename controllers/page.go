@@ -51,7 +51,7 @@ func Index(context *web.Context, pkg *ServicePackage, param struct {
 			param.Page = 1
 		}
 		var replies, err5 = pkg.ArticleService.Articles(param.Page)
-		if err5 != nil {
+		if err5 != nil || len(replies) <= 0 {
 			context.Processor.Logger.Error(err5.Error())
 			return context.NotFound()
 		}
@@ -92,7 +92,7 @@ func Category(context *web.Context, pkg *ServicePackage, param struct {
 		return context.NotFound()
 	}
 	var page, err4 = pkg.ArticleService.CategoryPage(param.Id)
-	if err4 != nil {
+	if err4 != nil || param.Page > page {
 		context.Processor.Logger.Error(err4.Error())
 		return context.NotFound()
 	}

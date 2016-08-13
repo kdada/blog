@@ -10,7 +10,6 @@
 </head>
 
 <body>
-    {{.SESSION.SetDefault "Login" false}}
     {{$login := .SESSION.Bool "Login"}}
     {{if not $login}}
     <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="loginLabel">
