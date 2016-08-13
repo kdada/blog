@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label for="loginPassword">密码:</label>
-                            <input type="password" class="form-control" id="loginPassword" placeholder="密码至少6位">
+                            <input type="password" class="form-control" id="loginPassword" placeholder="密码长度为6-15位">
                         </div>
                     </form>
                 </div>
@@ -95,6 +95,7 @@
                     {{else}}
                     {{$user := .SESSION.Value "User"}}
                     <li><a>{{$user.Name}}</a></li>
+                    <li><a id="logout">登出</a></li>
                     {{end}}
                     {{template "Nav" .}}
                 </ul>

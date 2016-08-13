@@ -23,6 +23,13 @@ func (this *UserController) Login(m *models.UserLogin, userService *services.Use
 	return this.Context.Api(models.NewSuccessResult(userInfo))
 }
 
+// Logout 用户登出
+func (this *UserController) Logout() web.PostResult {
+	this.Context.Session.Delete("Login")
+	this.Context.Session.Delete("User")
+	return this.Context.Api(models.NewSuccessResult(nil))
+}
+
 // Register 用户注册
 func (this *UserController) Register(m *models.UserRegister, userService *services.UserService) web.PostResult {
 	var err = userService.Register(m.Email, m.Name, m.Password)
