@@ -95,7 +95,7 @@
                     {{else}}
                     {{$user := .SESSION.Value "User"}}
                     <li><a>{{$user.Name}}</a></li>
-                    <li><a class="btn" href="#" id="logout">登出</a></li>
+                    <li><a href="#" id="logout">登出</a></li>
                     {{end}}
                     {{template "Nav" .}}
                 </ul>
