@@ -1,4 +1,7 @@
-$(document).ready(RefreshPage)
+$(document).ready(function () {
+    RefreshPage()
+    RegisterReply()
+})
 
 // RefreshPage 刷新页码
 function RefreshPage() {
@@ -47,17 +50,27 @@ function RefreshPage() {
 }
 
 // UpdateReplies 更新评论
-function UpdateReplies(replies:any) {
+function UpdateReplies(replies: any) {
     var content = $(".reply-content")
     content.html("")
     if (replies != null && replies.length) {
-        for (var i = 0;i < replies.length; i++) {
+        for (var i = 0; i < replies.length; i++) {
             var r = replies[i]
+            var date = new Date(r.CreateTime)
+            var dateStr = date.toLocaleString('zh-cn',{
+                year:"numeric",
+                month:"2-digit",
+                day:"2-digit",
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit",
+                hour12:false,
+            }).replace(/[年月]/g,"-").replace("日","")
             content.append(`
             <div class="well">
-                <h5 class="media-heading">`+r.Floor+`楼 `+r.CreateTime+`</h5>
-                <h5 class="media-heading">`+r.Name+`:</h5>
-                `+r.Content+`
+                <h5 class="media-heading">`+ r.Floor + `楼 ` + dateStr + `</h5>
+                <h5 class="media-heading">`+ r.Name + `:</h5>
+                `+ r.Content + `
             </div>
             `)
         }
@@ -84,5 +97,32 @@ function Jump(page: number) {
                 console.log(data)
             }
         },
+    })
+}
+
+// RegisterReply 注册评论按钮事件
+function RegisterReply() {
+    $("#ShowReply").click(function(){
+        $("#replyId").val("0")
+        $("#Reply").modal("show")
+    })
+    $("#replyButton").click(function () {
+        //评论
+        $.ajax({
+            url: "/reply/new",
+            type: "post",
+            data: {
+                "Article": $("#articleId").val(),
+                "Reply": $("#replyId").val(),
+                "Content": $("#replyContent").val(),
+            },
+            success: function (data) {
+                $("#Reply").modal("hide")
+                $("#replyContent").val("")
+                if (data && data.Code == 0) {
+                    Jump(1)
+                }
+            },
+        })
     })
 }

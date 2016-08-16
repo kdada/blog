@@ -70,3 +70,9 @@ func (this *ReplyService) Page(article int) (int, error) {
 	}
 	return 0, err
 }
+
+// New 创建评论
+func (this *ReplyService) New(article, reply, userId int, content string) error {
+	var _, err = this.db.Exec(`insert into reply(article,account,reply,content) values($1,$2,$3,$4)`, article, userId, reply, content)
+	return err
+}

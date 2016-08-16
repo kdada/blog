@@ -38,13 +38,14 @@
     <li>版权声明：<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">自由转载-非商用-非衍生-保持署名(CC 3.0)</a></li>
   </ul>
 </div>
-<div class="h3">评论列表 <button class="btn btn-default  btn-xs" data-toggle="modal" data-target="#Reply">发表评论</button></div>
+{{$login := .SESSION.Bool "Login"}}
+<div class="h3">评论列表 {{if $login}}<button class="btn btn-default  btn-xs" id="ShowReply">发表评论</button>{{end}}</div>
 <div class="reply">
   {{if gt .ReplyPage 0}}
   <div class="reply-content">
     {{range .Replies}}
     <div class="well">
-     <div id="r{{.Floor}}" class="media-heading h5">{{.Floor}}楼 {{time .CreateTime}}  <!--<button class="btn btn-default  btn-xs">回复</button> --></div>
+     <div id="r{{.Id}}" class="media-heading h5">{{.Floor}}楼 {{time .CreateTime}}  <!--<button class="btn btn-default  btn-xs">回复</button> --></div>
       <h5 class="media-heading">{{.Name}}:</h5>
       {{.Content}}
     </div>
@@ -60,9 +61,7 @@
     </div>
   {{end}}
 </div>
-
-
-
+{{if $login}}
 <div class="modal fade" id="Reply" tabindex="-1" role="dialog" aria-labelledby="ReplyLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -75,9 +74,8 @@
         <form>
           <div class="form-group">
             <textarea type="text" class="form-control" id="replyContent"></textarea>
-          </div>
-          <div class="form-group">
-            <input type="hidden" class="form-control" id="replyId"></textarea>
+            <input type="hidden" class="form-control" id="replyId" value="0">
+            <input type="hidden" class="form-control" id="articleId" value="{{.Article.Id}}">
           </div>
         </form>
       </div>
@@ -88,4 +86,5 @@
     </div>
   </div>
 </div>
+{{end}}
 {{end}}
