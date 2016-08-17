@@ -656,9 +656,7 @@ Content | string | true | 评论内容 | 评论内容
 ```
 {
     Code:   int     //状态码,为0
-    Data: {
-        Id:     int     //评论id
-    }
+    Data:   nil
 }
 ```
 错误返回:  

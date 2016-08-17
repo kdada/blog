@@ -1,0 +1,26 @@
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>名称</td>
+            <td>是否显示</td>
+            <td><button class="btn btn-default">创建分类</button></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let c of categories;">
+            <td>{{c.Id}}</td>
+            <td (click)="c.Modifing=true">
+                <span *ngIf="!c.Modifing">{{c.Name}}</span>
+                <input focus (blur)="c.Modifing=false" type="text" class="form-control" *ngIf="c.Modifing" [(ngModel)]="c.Name">
+            </td>
+            <td>
+                <div [@switchContainer]="c.State" (click)="c.State=c.State=='true'?'false':'true';Switch(c)" style="background: #eee; border-radius: 15px; width: 50px; height: 30px;padding-top:2px;padding-left:2px">
+                    <div [@switchButton]="c.State" style="border-radius: 50%; width: 26px; height: 26px;">
+                    </div>
+                </div>
+            </td>
+            <td><button class="btn btn-default">删除分类</button></td>
+        </tr>
+    </tbody>
+</table>
