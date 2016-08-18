@@ -5,5 +5,7 @@ import {Component} from "@angular/core"
     template:`ArticleComponent`
 })
 export class ArticleComponent {
-    
+    constructor(){
+
+    }
 }

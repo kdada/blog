@@ -1,8 +1,9 @@
-import {Component, trigger, state, style, transition, animate} from "@angular/core"
+import {Component,Input, trigger, state, style, transition, animate} from "@angular/core"
 import {Category, CategoryService} from "./category.service";
 import {FocusDirective} from "./focus.directive";
 
 @Component({
+    selector:"msssss",
     templateUrl: "/tmpl/category.html",
     viewProviders: [CategoryService],
     directives: [FocusDirective],
@@ -30,6 +31,8 @@ import {FocusDirective} from "./focus.directive";
     ]
 })
 export class CategoryComponent {
+    @Input("losst") public width:number
+    @Input("click") public delegateClick:()=>boolean
     public categories: Category[]
     private request:(c:boolean)=>void
     public constructor(private categoryService: CategoryService) {
@@ -39,6 +42,8 @@ export class CategoryComponent {
         },1000)
     }
     public Switch(c:Category) {
+        console.log(this.width)
+        console.log(this.delegateClick())
         console.log("kk:"+c)
         this.request(true)
     }
