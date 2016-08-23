@@ -8,7 +8,7 @@ import (
 
 // 分类服务
 type CategoryService struct {
-	db *sql.DB
+	DB *sql.DB
 }
 
 // NewCategoryService 创建分类服务
@@ -21,7 +21,7 @@ func NewCategoryService() *CategoryService {
 // Categories 获取所有分类
 func (this *CategoryService) Categories() ([]*models.Category, error) {
 	var v []*models.Category
-	var _, err = this.db.Query("select * from category where status = 1").Scan(&v)
+	var _, err = this.DB.Query("select * from category where status = 1").Scan(&v)
 	if err == nil {
 		return v, nil
 	}

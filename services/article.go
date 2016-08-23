@@ -8,7 +8,7 @@ import (
 
 // 文章服务
 type ArticleService struct {
-	db *sql.DB
+	DB *sql.DB
 }
 
 // NewArticleService 创建文章服务
@@ -21,7 +21,7 @@ func NewArticleService() *ArticleService {
 // NewestArticles 获取最新文章
 func (this *ArticleService) NewestArticles() ([]*models.ArticleSummary, error) {
 	var v []*models.ArticleSummary
-	var _, err = this.db.Query("select * from article where status = 1 order by update_time desc limit 10").Scan(&v)
+	var _, err = this.DB.Query("select * from article where status = 1 order by update_time desc limit 10").Scan(&v)
 	if err == nil {
 		return v, nil
 	}
@@ -31,7 +31,7 @@ func (this *ArticleService) NewestArticles() ([]*models.ArticleSummary, error) {
 // Page 返回所有文章总页数
 func (this *ArticleService) Page() (int, error) {
 	var v int
-	var _, err = this.db.Query(`select count(*) from article where status = 1`).Scan(&v)
+	var _, err = this.DB.Query(`select count(*) from article where status = 1`).Scan(&v)
 	if err == nil {
 		var page = v / 10
 		if v%10 > 0 {
@@ -45,7 +45,7 @@ func (this *ArticleService) Page() (int, error) {
 // Articles 返回指定页数的文章
 func (this *ArticleService) Articles(page int) ([]*models.ArticleSummary, error) {
 	var v []*models.ArticleSummary
-	var _, err = this.db.Query(`
+	var _, err = this.DB.Query(`
 select * ,top > 0 as is_top,left(content,100) as summary
 from article 
 where status = 1 
@@ -61,7 +61,7 @@ limit $2`, (page-1)*10, 10).Scan(&v)
 // CategoryPage 返回所有文章总页数
 func (this *ArticleService) CategoryPage(category int) (int, error) {
 	var v int
-	var _, err = this.db.Query(`select count(*) from article where category = $1 and status = 1`, category).Scan(&v)
+	var _, err = this.DB.Query(`select count(*) from article where category = $1 and status = 1`, category).Scan(&v)
 	if err == nil {
 		var page = v / 10
 		if v%10 > 0 {
@@ -75,7 +75,7 @@ func (this *ArticleService) CategoryPage(category int) (int, error) {
 // CategoryArticles 返回指定页数的文章
 func (this *ArticleService) CategoryArticles(category int, page int) ([]*models.ArticleSummary, error) {
 	var v []*models.ArticleSummary
-	var _, err = this.db.Query(`
+	var _, err = this.DB.Query(`
 select * ,top > 0 as is_top,left(content,100) as summary
 from article 
 where status = 1 and category = $1 
@@ -91,7 +91,7 @@ limit $3`, category, (page-1)*10, 10).Scan(&v)
 // Article 获取指定id的文章
 func (this *ArticleService) Article(id int) (*models.Article, error) {
 	var v *models.Article
-	var _, err = this.db.Query(`
+	var _, err = this.DB.Query(`
 select a.*,c.name
 from category c,
 (select * 
@@ -107,7 +107,7 @@ where c.id = a.category`, id).Scan(&v)
 // PreviousArticle 指定id的上一篇文章
 func (this *ArticleService) PreviousArticle(id, category int) (*models.Article, error) {
 	var v *models.Article
-	var count, err = this.db.Query(`
+	var count, err = this.DB.Query(`
 select * 
 from article 
 where status = 1 and id < $1 and category = $2
@@ -126,7 +126,7 @@ limit 1
 // NextArticle 指定id的下一篇文章
 func (this *ArticleService) NextArticle(id, category int) (*models.Article, error) {
 	var v *models.Article
-	var count, err = this.db.Query(`
+	var count, err = this.DB.Query(`
 select * 
 from article 
 where status = 1 and id > $1 and category = $2

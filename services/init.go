@@ -1,23 +1,17 @@
 package services
 
 import (
-	"reflect"
-
 	"github.com/kdada/tinygo/meta"
+	"github.com/kdada/tinygo/sql"
 )
 
 func init() {
 	//注册服务类型,用于自动注入
-	meta.RegisterGenerateFunc(reflect.TypeOf((*UserService)(nil)), func() interface{} {
-		return NewUserService()
+	meta.GlobalValueContainer.Register(nil, func() *sql.DB {
+		return sql.OpenDefault()
 	})
-	meta.RegisterGenerateFunc(reflect.TypeOf((*CategoryService)(nil)), func() interface{} {
-		return NewCategoryService()
-	})
-	meta.RegisterGenerateFunc(reflect.TypeOf((*ArticleService)(nil)), func() interface{} {
-		return NewArticleService()
-	})
-	meta.RegisterGenerateFunc(reflect.TypeOf((*ReplyService)(nil)), func() interface{} {
-		return NewReplyService()
-	})
+	meta.GlobalValueContainer.Register(nil, (*UserService)(nil))
+	meta.GlobalValueContainer.Register(nil, (*CategoryService)(nil))
+	meta.GlobalValueContainer.Register(nil, (*ArticleService)(nil))
+	meta.GlobalValueContainer.Register(nil, (*ReplyService)(nil))
 }

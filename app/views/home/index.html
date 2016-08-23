@@ -36,8 +36,7 @@
       </a>
     </li>
     {{$G := .}}
-    {{range $k,$v := until .PageLength}}
-        {{$v := add $v $G.StartPage}}
+    {{range $k,$v := until .StartPage .EndPage}}
         {{$first := eq $v 1}}
         {{$current := eq $v $G.CurrentPage}}
     <li {{if $current}}class="active"{{end}}><a href="{{if $current}}javascript:void(0);{{else if $first}}{{$G.FirstUrl}}{{else}}{{$G.Url}}{{$v}}.html{{end}}">{{$v}}</a></li>

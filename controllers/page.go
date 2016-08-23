@@ -77,7 +77,7 @@ func Index(context *web.Context, pkg *ServicePackage, param struct {
 		start = 1
 	}
 	d["StartPage"] = start
-	d["PageLength"] = end - start + 1
+	d["EndPage"] = end
 	return context.View("home/index.html", d)
 }
 
@@ -129,7 +129,7 @@ func Category(context *web.Context, pkg *ServicePackage, param struct {
 		start = 1
 	}
 	d["StartPage"] = start
-	d["PageLength"] = end - start + 1
+	d["EndPage"] = end
 	return context.View("home/index.html", d)
 }
 
