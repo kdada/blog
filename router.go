@@ -30,5 +30,7 @@ func Router() router.Router {
 	root.AddChild(web.NewControllerRouter(new(controllers.UserController)))
 	//评论路由
 	root.AddChild(web.NewControllerRouter(new(controllers.ReplyController)))
+	//分类路由
+	root.AddChild(web.NewControllerRouter(new(controllers.CategoryController)))
 	return root
 }

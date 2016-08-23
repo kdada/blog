@@ -137,7 +137,6 @@ func Category(context *web.Context, pkg *ServicePackage, param struct {
 func Article(context *web.Context, pkg *ServicePackage, param struct {
 	Id int `!;>0`
 }) web.GetResult {
-	context.Processor.Logger.Debug(param)
 	var d, err = layoutViewData(pkg)
 	if err != nil {
 		context.Processor.Logger.Error(err.Error())

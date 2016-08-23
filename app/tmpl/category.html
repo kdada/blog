@@ -1,11 +1,11 @@
-<a class="btn"><span class="glyphicon glyphicon-plus"></span> 创建分类</a>
+<a (click)="ShowDialog()" class="btn"><span class="glyphicon glyphicon-plus"></span> 创建分类</a>
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
-            <td>Id</td>
-            <td width="30%">名称</td>
-            <td>是否显示</td>
-            <td>操作</td>
+            <td class="table-td-min">ID</td>
+            <td class="table-td-max">名称</td>
+            <td  class="table-td-min">是否显示</td>
+            <td class="table-td-middle">操作</td>
         </tr>
     </thead>
     <tbody>
@@ -13,15 +13,15 @@
             <td>{{c.Id}}</td>
             <td (click)="c.Modifing=true">
                 <span *ngIf="!c.Modifing">{{c.Name}}</span>
-                <input focus (blur)="c.Modifing=false" type="text" class="form-control" *ngIf="c.Modifing" [(ngModel)]="c.Name">
+                <input focus (blur)="ToggleStatus(c)" (keyup.enter)="ToggleStatus(c)" type="text" class="form-control" *ngIf="c.Modifing" [(ngModel)]="c.Name">
             </td>
             <td>
-                <div [@switchContainer]="c.State" (click)="c.State=c.State=='true'?'false':'true';Switch(c)" style="background: #eee; border-radius: 15px; width: 50px; height: 30px;padding-top:2px;padding-left:2px">
-                    <div [@switchButton]="c.State" style="border-radius: 50%; width: 26px; height: 26px;">
+                <div [@switchContainer]="c.State" (click)="Switch(c)" class="switch-container">
+                    <div [@switchButton]="c.State" class="switch-button">
                     </div>
                 </div>
             </td>
-            <td><a class="btn">删除</a></td>
+            <td><a (click)="Delete(c)" class="btn">删除</a></td>
         </tr>
     </tbody>
 </table>

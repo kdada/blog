@@ -1,0 +1,37 @@
+
+
+.switch-container {
+    border-radius: 15px; 
+    width: 50px; 
+    height: 30px;
+    padding: 2px;
+}
+
+.switch-container .switch-button {
+    background: #fff; 
+    border-radius: 50%;
+    margin-left: 20px;
+    width: 26px;
+    height: 26px;
+}
+
+.table-td-min {
+    width: 10%;
+}
+
+.table-td-middle {
+    width: 30%;
+}
+
+.table-td-max {
+    width: 50%;
+}
+
+textarea.auto-textarea {
+    min-height: 300px;
+}
+
+.generate-area {
+    min-height: 300px;
+    border: 1px solid #aaa;
+}
