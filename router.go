@@ -29,7 +29,7 @@ func Router() router.Router {
 	//管理后台路由
 	var manager = web.NewSpaceRouter("manager")
 	manager.AddChild(web.NewMutableFuncRouter("index", controllers.Manager))
-	//manager.AddPreFilter(new(AdminFilter))
+	manager.AddPreFilter(new(AdminFilter))
 	root.AddChild(manager)
 	//用户服务路由
 	root.AddChild(web.NewControllerRouter(new(controllers.UserController)))
@@ -41,6 +41,8 @@ func Router() router.Router {
 	newReply.AddPreFilter(new(LoginFilter))
 	//分类路由
 	root.AddChild(web.NewControllerRouter(new(controllers.CategoryController)))
+	//文章路由
+	root.AddChild(web.NewControllerRouter(new(controllers.ArticleController)))
 	return root
 }
 

@@ -18,6 +18,13 @@ func NewArticleService() *ArticleService {
 	}
 }
 
+// New 创建文章
+func (this *ArticleService) New(title string, content string, category int) error {
+	var _, err = this.DB.Exec("insert into article(category,title,content) values($1,$2,$3)", category, title, content)
+	return err
+
+}
+
 // NewestArticles 获取最新文章
 func (this *ArticleService) NewestArticles() ([]*models.ArticleSummary, error) {
 	var v []*models.ArticleSummary

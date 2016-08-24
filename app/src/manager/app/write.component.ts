@@ -1,32 +1,41 @@
 import {Component, ElementRef, ViewChild} from "@angular/core"
 import {Category, CategoryService} from "./category.service";
-
+import {Result, ArticleService} from './article.service';
 
 @Component({
     templateUrl: `/tmpl/write.html`,
-    viewProviders: [CategoryService]
+    viewProviders: [CategoryService, ArticleService]
 })
 export class WriteComponent {
     public Title: string
     public Content: string
+    public Category: number
     public Status: string
     public Error: string
+    public Info: string
     public categories: Category[]
     private preStatus: string
     @ViewChild("wall")
     private wall: ElementRef
     private converter: showdown.Converter
     private change: () => void
-    public constructor(private categoryService: CategoryService) {
+    public constructor(private categoryService: CategoryService, private articleService: ArticleService) {
         this.Status = ""
         this.Error = ""
+        this.Info = ""
         this.Title = ""
         this.Content = ""
+        this.Category = 0
         this.converter = new showdown.Converter()
         this.change = _.debounce(() => {
             this.Markdown()
         }, 100)
-        categoryService.List().then(c => this.categories = c)
+        categoryService.List().then(c => {
+            this.categories = c
+            if (this.categories.length > 0) {
+                this.Category = this.categories[0].Id
+            }
+        })
     }
     // 文章内容改变时自动重新生成markdown
     public Change() {
@@ -52,6 +61,7 @@ export class WriteComponent {
     }
     // 提交
     public Submit() {
+        this.Info = ""
         if (this.Title.length <= 0) {
             this.Error = "请填写文章标题"
             return
@@ -61,8 +71,15 @@ export class WriteComponent {
             return
         }
         this.Error = ""
-        console.log(this.Title)
-        console.log(this.Content)
+        this.articleService.New(this.Title, this.Content, this.Category).then(result => {
+            
+            debugger
+            if (result.Code != 0) {
+                this.Error = result.Message
+            } else {
+                this.Info = "提交成功"
+            }
+        })
     }
     public ngAfterViewChecked() {
         if (this.wall && this.Content && this.Status != this.preStatus) {
