@@ -31,7 +31,8 @@
 <div class="form-group">
     <label>文章分类:</label>
     <select class="form-control">
-        <option>123</option>
+        <option *ngFor="let c of categories;" value="{{c.Id}}">{{c.Name}}</option>
     </select>
 </div>
-<button class="btn btn-default">提交</button>
+<div *ngIf="Error" class="alert alert-danger" role="alert">{{Error}}</div>
+<button (click)="Submit()" class="btn btn-default">提交</button>

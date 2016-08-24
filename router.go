@@ -2,7 +2,11 @@ package main
 
 import (
 	"blog/controllers"
+	"blog/models"
+	"blog/services"
+	"reflect"
 
+	"github.com/kdada/tinygo/meta"
 	"github.com/kdada/tinygo/router"
 	"github.com/kdada/tinygo/web"
 )
@@ -25,12 +29,57 @@ func Router() router.Router {
 	//管理后台路由
 	var manager = web.NewSpaceRouter("manager")
 	manager.AddChild(web.NewMutableFuncRouter("index", controllers.Manager))
+	//manager.AddPreFilter(new(AdminFilter))
 	root.AddChild(manager)
 	//用户服务路由
 	root.AddChild(web.NewControllerRouter(new(controllers.UserController)))
+	var logout, _ = root.Find(router.NewBaseContext("/user/logout"))
+	logout.AddPreFilter(new(LoginFilter))
 	//评论路由
 	root.AddChild(web.NewControllerRouter(new(controllers.ReplyController)))
+	var newReply, _ = root.Find(router.NewBaseContext("/reply/new"))
+	newReply.AddPreFilter(new(LoginFilter))
 	//分类路由
 	root.AddChild(web.NewControllerRouter(new(controllers.CategoryController)))
 	return root
+}
+
+// 登录过滤器
+type LoginFilter struct {
+}
+
+// Filter 过滤该请求
+// return:返回true表示继续处理,否则终止路由过程,后续的过滤器也不会执行
+func (this *LoginFilter) Filter(context router.RouterContext) bool {
+	var ctx, ok = context.(*web.Context)
+	if ok {
+		var login, ok = ctx.Session.Bool("Login")
+		return ok && login
+	}
+	return false
+}
+
+// 管理员过滤器
+type AdminFilter struct {
+}
+
+// Filter 过滤该请求
+// return:返回true表示继续处理,否则终止路由过程,后续的过滤器也不会执行
+func (this *AdminFilter) Filter(context router.RouterContext) bool {
+	var ctx, ok = context.(*web.Context)
+	if ok {
+		var login, ok = ctx.Session.Bool("Login")
+		if ok && login {
+			var value, _ = ctx.Session.Value("User")
+			var loginInfo, ok2 = value.(*models.UserInfo)
+			if ok2 {
+				var vp, ok3 = meta.GlobalValueContainer.Contains("", reflect.TypeOf((*services.UserService)(nil)))
+				if ok3 {
+					var userService, ok4 = vp.Value().(*services.UserService)
+					return ok4 && userService.IsAdmin(loginInfo.Id)
+				}
+			}
+		}
+	}
+	return false
 }

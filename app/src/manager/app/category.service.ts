@@ -27,7 +27,7 @@ export class CategoryService {
     public List(): Promise<Category[]> {
         return this.http.post("/category/list", {}).toPromise().then((resp: Response): Category[] => {
             var result = resp.json()
-            if (result.Code != 0) {
+            if (result.Code != 0 || result.Data == null) {
                 return []
             } else {
                 var categories = new Array<Category>()

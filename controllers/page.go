@@ -181,13 +181,4 @@ func Article(context *web.Context, pkg *ServicePackage, param struct {
 // Manager 管理后台页面
 func Manager(context *web.Context, userService *services.UserService) web.GetResult {
 	return context.View("manager/index.html")
-	//	var login, ok = context.Session.Bool("Login")
-	//	if ok && login {
-	//		var value, _ = context.Session.Value("User")
-	//		var loginInfo, ok2 = value.(*models.UserInfo)
-	//		if ok2 && userService.IsAdmin(loginInfo.Id) {
-
-	//		}
-	//	}
-	//	return context.NotFound()
 }
