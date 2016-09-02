@@ -40,8 +40,7 @@ func (this *UserService) Register(email, name, password string) error {
 	if id > 0 {
 		return models.ErrorExistentName.Error()
 	}
-	_, err = this.DB.Exec("insert into account(email,name,password,salt) values($1,$2,$3,'salt')", email, name, password)
-	return err
+	return this.DB.Exec("insert into account(email,name,password,salt) values($1,$2,$3,'salt')", email, name, password).Error()
 }
 
 // Login 登录
