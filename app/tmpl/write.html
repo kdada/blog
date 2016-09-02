@@ -3,6 +3,12 @@
     <input [(ngModel)]="Title" type="text" class="form-control">
 </div>
 <div class="form-group">
+    <label>文章分类:</label>
+    <select [(ngModel)]="Category" class="form-control">
+        <option *ngFor="let c of categories;" value="{{c.Id}}">{{c.Name}}</option>
+    </select>
+</div>
+<div class="form-group">
     <div class="row">
         <div class="col-xs-6">
             <label>文章内容:</label>
@@ -14,11 +20,11 @@
         </div>
     </div>
     <div *ngIf="Status=='Editor'">
-        <textarea [(ngModel)]="Content" class="form-control auto-textarea"></textarea>
+        <textarea #editor [(ngModel)]="Content" [style.height]="height" (input)="Change()" class="form-control auto-textarea"></textarea>
     </div>
     <div *ngIf="Status==''" class="row">
         <div class="col-xs-6">
-            <textarea [(ngModel)]="Content" (input)="Change()" class="form-control auto-textarea"></textarea>
+            <textarea #editor [(ngModel)]="Content" [style.height]="height" (input)="Change()" class="form-control auto-textarea"></textarea>
         </div>
         <div class="col-xs-6 generate-area">
             <div #wall></div>
@@ -27,12 +33,6 @@
     <div *ngIf="Status=='Plane'">
         <div #wall class="generate-area"></div>
     </div>
-</div>
-<div class="form-group">
-    <label>文章分类:</label>
-    <select [(ngModel)]="Category" class="form-control">
-        <option *ngFor="let c of categories;" value="{{c.Id}}">{{c.Name}}</option>
-    </select>
 </div>
 <div *ngIf="Info" class="alert alert-success" role="alert">{{Info}}</div>
 <div *ngIf="Error" class="alert alert-danger" role="alert">{{Error}}</div>

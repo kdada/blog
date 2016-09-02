@@ -29,6 +29,7 @@
 
 textarea.auto-textarea {
     min-height: 300px;
+    overflow-y: hidden;
 }
 
 .generate-area {

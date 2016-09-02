@@ -17,6 +17,9 @@ export class WriteComponent {
     private preStatus: string
     @ViewChild("wall")
     private wall: ElementRef
+    @ViewChild("editor")
+    private editor: ElementRef
+    private height: string
     private converter: showdown.Converter
     private change: () => void
     public constructor(private categoryService: CategoryService, private articleService: ArticleService) {
@@ -36,10 +39,14 @@ export class WriteComponent {
                 this.Category = this.categories[0].Id
             }
         })
+        this.height = "400px";
     }
     // 文章内容改变时自动重新生成markdown
     public Change() {
-        this.change()
+        this.height = (<HTMLElement>this.editor.nativeElement).scrollHeight + "px"
+        if (this.wall) {
+            this.change()
+        }
     }
     // 重新生成markdown
     public Markdown() {
@@ -57,7 +64,6 @@ export class WriteComponent {
             }
             code.parentElement.insertBefore(rowDiv, code)
         }
-
     }
     // 提交
     public Submit() {
@@ -72,7 +78,7 @@ export class WriteComponent {
         }
         this.Error = ""
         this.articleService.New(this.Title, this.Content, this.Category).then(result => {
-            
+
             debugger
             if (result.Code != 0) {
                 this.Error = result.Message
