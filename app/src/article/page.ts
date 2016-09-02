@@ -51,21 +51,19 @@ function RefreshPage() {
 
 // UpdateReplies 更新评论
 function UpdateReplies(replies: any) {
+    function resolveNum(num: number): string {
+        if (num < 10) {
+            return "0" + num
+        }
+        return ""+num
+    }
     var content = $(".reply-content")
     content.html("")
     if (replies != null && replies.length) {
         for (var i = 0; i < replies.length; i++) {
             var r = replies[i]
             var date = new Date(r.CreateTime)
-            var dateStr = date.toLocaleString('zh-cn',{
-                year:"numeric",
-                month:"2-digit",
-                day:"2-digit",
-                hour:"2-digit",
-                minute:"2-digit",
-                second:"2-digit",
-                hour12:false,
-            }).replace(/[年月]/g,"-").replace("日","")
+            var dateStr = date.getFullYear() + "-" + resolveNum(date.getMonth()) + "-" + resolveNum(date.getDate()) + " " + resolveNum(date.getHours()) + ":" + resolveNum(date.getMinutes()) + ":" + resolveNum(date.getSeconds())
             content.append(`
             <div class="well">
                 <h5 class="media-heading">`+ r.Floor + `楼 ` + dateStr + `</h5>
@@ -102,7 +100,7 @@ function Jump(page: number) {
 
 // RegisterReply 注册评论按钮事件
 function RegisterReply() {
-    $("#ShowReply").click(function(){
+    $("#ShowReply").click(function () {
         $("#replyId").val("0")
         $("#Reply").modal("show")
     })
