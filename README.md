@@ -5,27 +5,34 @@
 目录结构:  
 ```
 main.go             main
-web.cfg             tinygo web配置文件
-|-app
-  |-favicon.ico     图标文件
-  |-robots.txt      搜索引擎文件
+|-config
+  web.cfg             tinygo web配置文件
+|-frontend          前端应用源码
+  |-files           静态文件
+    |-favicon.ico   图标文件
+    |-robots.txt    搜索引擎文件
   |-css             css文件目录
-  |-js              js文件目录
   |-src             ts源码文件,使用tsc编译到js目录
-  |-tmpl            angular2的模板文件目录
+  |-tmpls           angular2的模板文件目录
   |-views           tinygo框架视图模板文件目录
     |-layout.json   tinygo框架视图布局文件
     |-layout        布局模板文件目录
       |-layout.html
     |-home          视图模板文件目录
       |-index.html
-|-controllers       控制器源码
-  |-home.go
-|-models            数据模型源码
-  |-model.go
-|-services          服务源码
-  |-service.go
+|-backend           后端应用源码
+  |-controllers     控制器源码
+    |-home.go
+  |-models          数据模型源码
+    |-model.go
+  |-services        服务源码
+    |-service.go
 ```
+1. main.go负责创建并运行应用  
+2. frontend是前端应用目录  
+3. backend是后端应用目录  
+4. config是配置文件目录  
+上述结构实现了前端和后端的文件分离,便于代码管理和开发,同时能够方便的实现单项目多应用的结构  
   
 
 database:   PostgreSQL  

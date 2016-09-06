@@ -1,6 +1,5 @@
 *.exe
 blog
-/app/src/node_modules/*
-/app/src/typings/*
-/app/js/*
-!/app/js/lib/
+node_modules
+typings
+web
