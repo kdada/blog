@@ -28,7 +28,7 @@ var files = {
 }
 
 //需要移动的文件和目录
-var static = ["./files/**", "./fonts/**", "./img/**"]
+var static = ["./files/**", "./fonts/**", "./img/**", "./view/layout.json"]
 
 //生成目标目录
 var output = {
@@ -262,6 +262,7 @@ gulp.task("prod", ["md5"])
 
 //监听文件变化
 gulp.task("watch", function () {
+    console.log(files,static)
     gulp.watch(files.views, ["default"])
     gulp.watch(files.css, ["dev-css"])
     gulp.watch(files.module, ["dev-module"])

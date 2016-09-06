@@ -1,0 +1,27 @@
+.blog-navbar {
+    background-color: #303535;
+    border-radius: 0px;
+}
+
+.blog-flex-container { 
+    display: flex;
+}
+
+.blog-flex-extend {
+    flex: 1;
+}
+
+.blog-flex-fixed {
+    flex: none;
+}
+
+.blog-search-button {
+    height: 100%;
+    margin-left: 5px;
+}
+
+.blog-footer {
+    padding: 30px;
+    background-color: #303535;
+    color: #fff;
+}
