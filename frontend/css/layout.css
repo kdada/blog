@@ -25,3 +25,24 @@
     background-color: #303535;
     color: #fff;
 }
+
+.blog-text-hidden {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.blog-subtitle {
+    margin-top: 10px;
+}
+
+.blog-list > li > a {
+    padding: 2px 5px;
+}
+
+/*样式覆盖*/
+.panel-default > .panel-heading {
+    background-color: #fdfdfd;
+}
+
