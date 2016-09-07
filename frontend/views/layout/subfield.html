@@ -1,0 +1,48 @@
+{{define "MainArea"}}
+<!--内容区域-->
+<div class="row">
+    <div class="col-sm-3 hidden-xs">
+        <!--列表区域-->
+        <div class="panel panel-default">
+            <div class="panel-heading">文章分类</div>
+            <div class="panel-body">
+                <ul class="nav nav-pills nav-stacked blog-list">
+                    <li><a href="#">第一分类</a></li>
+                    <li><a href="#">第二分类</a></li>
+                    <li><a href="#">第三分类</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">最新文章</div>
+            <div class="panel-body">
+                <ul class="nav nav-default blog-list">
+                    <li><a href="#">第一文章第一文章第一文章第一文章第一文章第一文章第一文章第一文章</a></li>
+                    <li><a href="#">第二文章</a></li>
+                    <li><a href="#">第三文章</a></li>
+                    <li><a href="#">第四文章</a></li>
+                    <li><a href="#">第五文章</a></li>
+                    <li><a href="#">第六文章</a></li>
+                    <li><a href="#">第七文章</a></li>
+                    <li><a href="#">第八文章</a></li>
+                    <li><a href="#">第九文章</a></li>
+                    <li><a href="#">第十文章</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">最新回复</div>
+            <div class="panel-body">
+                <ul class="nav nav-default blog-list">
+                    <li>xxx:<a class="blog-text-hidden" href="#">第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复</a></li>
+                    <li>xxx:<a class="blog-text-hidden" href="#">第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复</a></li>
+                    <li>xxx:<a class="blog-text-hidden" href="#">第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-9 col-xs-12">
+        {{template "Content" .}}
+    </div>
+</div>
+{{end}}

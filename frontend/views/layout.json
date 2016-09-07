@@ -1,0 +1,11 @@
+{
+	"LayoutMap": {
+		"Main": "layout/main.html",
+		"Subfield": "layout/subfield.html"
+	},
+	"DefaultLayout": "Subfield",
+	"LayoutSpec": {
+		"layout/subfield.html": "Main",
+		"manager/":""
+	}
+}

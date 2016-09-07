@@ -28,7 +28,7 @@ var files = {
 }
 
 //需要移动的文件和目录
-var static = ["./files/**", "./fonts/**", "./img/**", "./view/layout.json"]
+var static = ["./files/**", "./fonts/**", "./img/**", "./views/layout.json"]
 
 //生成目标目录
 var output = {
@@ -183,6 +183,12 @@ function buildModule(prod) {
                             ]
                         },
                         externals: {
+                            "@angular/common": "window.ng.common",
+                            "@angular/compiler": "window.ng.compiler",
+                            "@angular/forms": "window.ng.forms",
+                            "@angular/router": "window.ng.router",
+                            "@angular/platform-browser": "window.ng.platformBrowser",
+                            "@angular/platform-browser-dynamic": "window.ng.platformBrowserDynamic",
                             "@angular/core": "window.ng.core",
                             "@angular/http": "window.ng.http",
                             "rxjs": "window.Rx"

@@ -1,145 +1,74 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Kira | 个人博客</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <!-- build:vendor-css -->
-    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbuild-->
-    <!-- build:common-css -->
-    <link href="/css/layout.css" />
-    <!-- endbuild-->
-</head>
-
-<body>
-    <!--导航栏-->
-    <nav class="navbar navbar-inverse blog-navbar">
-        <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggle" data-toggle="collapse" data-target=".blog-collapse-target">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Kira的博客</a>
-            </div>
-            <div class="collapse navbar-collapse blog-collapse-target">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">主页</a></li>
-                    <li><a href="#">项目</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">登录</a></li>
-                    <li><a href="#">注册</a></li>
-                </ul>
-                <form class="navbar-form navbar-right blog-flex-container">
-                    <div class="form-group blog-flex-extend">
-                        <input type="text" class="form-control" placeholder="请输入搜索关键词" autocomplete="off">
-                    </div>
-                    <button type="submit" class="btn btn-default blog-flex-fixed blog-search-button">搜索</button>
-                </form>
-
-            </div>
-        </div>
-    </nav>
-
-    <!--内容区域-->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3 hidden-xs">
-                <!--列表区域-->
-                <div class="panel panel-default">
-                    <div class="panel-heading">文章分类</div>
-                    <div class="panel-body">
-                        <ul class="nav nav-pills nav-stacked blog-list">
-                            <li><a href="#">第一分类</a></li>
-                            <li><a href="#">第二分类</a></li>
-                            <li><a href="#">第三分类</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">最新文章</div>
-                    <div class="panel-body">
-                        <ul class="nav nav-default blog-list">
-                            <li><a href="#">第一文章第一文章第一文章第一文章第一文章第一文章第一文章第一文章</a></li>
-                            <li><a href="#">第二文章</a></li>
-                            <li><a href="#">第三文章</a></li>
-                            <li><a href="#">第四文章</a></li>
-                            <li><a href="#">第五文章</a></li>
-                            <li><a href="#">第六文章</a></li>
-                            <li><a href="#">第七文章</a></li>
-                            <li><a href="#">第八文章</a></li>
-                            <li><a href="#">第九文章</a></li>
-                            <li><a href="#">第十文章</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">最新回复</div>
-                    <div class="panel-body">
-                        <ul class="nav nav-default blog-list">
-                            <li>xxx:<a class="blog-text-hidden" href="#">第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复</a></li>
-                            <li>xxx:<a class="blog-text-hidden" href="#">第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复</a></li>
-                            <li>xxx:<a class="blog-text-hidden" href="#">第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-9 col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">标题</h3>
-                        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
-                    </div>
-                    <div class="panel-body">
-                        文章第一段的内容
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">标题</h3>
-                        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
-                    </div>
-                    <div class="panel-body">
-                        内容
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">标题</h3>
-                        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
-                    </div>
-                    <div class="panel-body">
-                        内容
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">标题</h3>
-                        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
-                    </div>
-                    <div class="panel-body">
-                        内容
-                    </div>
-                </div>
-            </div>
-        </div>
+{{define "Content"}}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">标题</h3>
+        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
     </div>
-
-    <!--脚注-->
-    <footer class="blog-footer">
-        <div class="container">
-            <div class="row text-center">
-                Copyright © 2016 Kira  |  备案号
-            </div>
-        </div>
-    </footer>
-    <!-- build:vendor-js -->
-    <script src="/node_modules/jquery/dist/jquery.js"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <!-- endbuild-->
-</body>
-
-</html>
+    <div class="panel-body">
+        文章第一段的内容
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">标题</h3>
+        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
+    </div>
+    <div class="panel-body">
+        内容
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">标题</h3>
+        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
+    </div>
+    <div class="panel-body">
+        内容
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">标题</h3>
+        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
+    </div>
+    <div class="panel-body">
+        内容
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">标题</h3>
+        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
+    </div>
+    <div class="panel-body">
+        内容
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">标题</h3>
+        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
+    </div>
+    <div class="panel-body">
+        内容
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">标题</h3>
+        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
+    </div>
+    <div class="panel-body">
+        内容
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">标题</h3>
+        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
+    </div>
+    <div class="panel-body">
+        内容
+    </div>
+</div>
+{{end}}
