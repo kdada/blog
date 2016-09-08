@@ -6,9 +6,10 @@ var concat = require("gulp-concat")
 var uglify = require("gulp-uglify")
 var md5 = require("gulp-md5-plus")
 var cleanCSS = require("gulp-clean-css")
-var webpack = require("gulp-webpack")
+var pack = require("gulp-webpack")
 var rename = require("gulp-rename")
 var clean = require("gulp-clean")
+var webpack = require("webpack")
 var Q = require("q")
 var path = require("path")
 var extractor = require("./extractor")
@@ -24,7 +25,7 @@ var dest = "../web/"
 var files = {
     views: "./views/**/*.html",
     css: "./css/**/*.css",
-    module: "./src/**/*.ts"
+    module: ["./src/**/*.ts","./tmpls/**/*.html"]
 }
 
 //需要移动的文件和目录
@@ -67,6 +68,8 @@ var config = {
 //分析html,根据html的定义生成replaceConfig和config
 function analyzeHtml() {
     return function () {
+        replaceConfig = {}
+        config = {}
         return gulp.src(files.views)
             .pipe(extractor(function (buildName, pathArray) {
                 var index = buildName.lastIndexOf("-")
@@ -154,56 +157,52 @@ function buildModule(prod) {
         var src = config.module
         console.log(config.module)
         if (src) {
-            var ds = []
-            for (var fileName in src) {
-                var d = Q.defer()
-                ds.push(d.promise)
-                var files = src[fileName]
-                var s = gulp.src(files)
-                    .pipe(webpack({
-                        resolve: {
-                            root: path.resolve("./"),
-                            extensions: ["", ".js", ".ts"]
-                        },
-                        resolveLoader: {
-                            alias: {
-                                "ngtemplate": path.resolve("./ngtemplate")
-                            }
-                        },
-                        module: {
-                            loaders: [
-                                {
-                                    test: /\.ts$/,
-                                    loaders: ["awesome-typescript-loader", "ngtemplate"]
-                                },
-                                {
-                                    test: /\.(html|css)$/,
-                                    loader: 'raw-loader'
-                                }
-                            ]
-                        },
-                        externals: {
-                            "@angular/common": "window.ng.common",
-                            "@angular/compiler": "window.ng.compiler",
-                            "@angular/forms": "window.ng.forms",
-                            "@angular/router": "window.ng.router",
-                            "@angular/platform-browser": "window.ng.platformBrowser",
-                            "@angular/platform-browser-dynamic": "window.ng.platformBrowserDynamic",
-                            "@angular/core": "window.ng.core",
-                            "@angular/http": "window.ng.http",
-                            "rxjs": "window.Rx"
+            var s = gulp.src(root)
+                .pipe(pack({
+                    entry: src,
+                    output: {
+                        filename: "[name]"
+                    },
+                    resolve: {
+                        root: path.resolve("./"),
+                        extensions: ["", ".js", ".ts"]
+                    },
+                    resolveLoader: {
+                        alias: {
+                            "ngtemplate": path.resolve("./ngtemplate")
                         }
-                    }))
-                if (prod) {
-                    s.pipe(uglify())
-                }
-                s.pipe(rename(fileName))
-                    .pipe(gulp.dest(output.module))
-                    .on("end", d.resolve)
+                    },
+                    module: {
+                        loaders: [
+                            {
+                                test: /\.ts$/,
+                                loaders: ["awesome-typescript-loader", "ngtemplate"]
+                            },
+                            {
+                                test: /\.(html|css)$/,
+                                loader: 'raw-loader'
+                            }
+                        ]
+                    },
+                    externals: {
+                        // "@angular/common": "window.ng.common",
+                        // "@angular/compiler": "window.ng.compiler",
+                        // "@angular/forms": "window.ng.forms",
+                        // "@angular/router": "window.ng.router",
+                        // "@angular/platform-browser": "window.ng.platformBrowser",
+                        // "@angular/platform-browser-dynamic": "window.ng.platformBrowserDynamic",
+                        // "@angular/core": "window.ng.core",
+                        // "@angular/http": "window.ng.http",
+                        // "rxjs": "window.Rx"
+                    },
+                    plugins: [
+                        new webpack.optimize.CommonsChunkPlugin("vendor_module.js", "vendor_module.js")
+                    ]
+                }))
+            if (prod) {
+                s.pipe(uglify())
             }
-            if (ds.length > 0) {
-                return Q.all(ds)
-            }
+            return s.pipe(gulp.dest(output.module))
         }
     }
 }
@@ -268,7 +267,7 @@ gulp.task("prod", ["md5"])
 
 //监听文件变化
 gulp.task("watch", function () {
-    console.log(files,static)
+    console.log(files, static)
     gulp.watch(files.views, ["default"])
     gulp.watch(files.css, ["dev-css"])
     gulp.watch(files.module, ["dev-module"])

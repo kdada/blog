@@ -3,7 +3,7 @@
 
 <head>
     <title>博客管理后台</title>
-    <base href="/">
+    <base href="/manager">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- build:vendor-css -->
     <link href="/node_modules/bootstrap/dist/css/bootstrap.css" />
@@ -14,60 +14,16 @@
 </head>
 
 <body>
-    <!--导航栏-->
-    <nav class="navbar navbar-inverse blog-navbar">
-        <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggle" data-toggle="collapse" data-target=".blog-collapse-target">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">博客管理后台</a>
-            </div>
-            <div class="visible-xs">
-                <div class="collapse navbar-collapse blog-collapse-target">
-                    <ul class="nav nav-navbar">
-                        <li><a href="">用户管理</a></li>
-                        <li><a href="">分类管理</a></li>
-                        <li><a href="">文件管理</a></li>
-                        <li><a href="">文章管理</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3 hidden-xs">
-                <ul class="nav nav-stacked">
-                    <li><a href="">用户管理</a></li>
-                    <li><a href="">分类管理</a></li>
-                    <li><a href="">文件管理</a></li>
-                    <li><a href="">文章管理</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-9 col-xs-12">
-                <manager></manager>
-            </div>
-        </div>
-    </div>
-
+    <manager></manager>
     <!-- build:vendor_manager-js -->
     <script src="/node_modules/core-js/client/shim.js"></script>
     <script src="/node_modules/zone.js/dist/zone.js"></script>
     <script src="/node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="/node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="/node_modules/rxjs/bundles/Rx.umd.js"></script>
-    <script src="/node_modules/@angular/core/bundles/core.umd.js"></script>
-    <script src="/node_modules/@angular/compiler/bundles/compiler.umd.js"></script>
-    <script src="/node_modules/@angular/common/bundles/common.umd.js"></script>
-    <script src="/node_modules/@angular/forms/bundles/forms.umd.js"></script>
-    <script src="/node_modules/@angular/http/bundles/http.umd.js"></script>
-    <script src="/node_modules/@angular/router/bundles/router.umd.js"></script>
-    <script src="/node_modules/@angular/platform-browser/bundles/platform-browser.umd.js"></script>
-    <script src="/node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"></script>
     <!-- endbuild-->
+
+    <!-- build:vendor_module-module -->
+    <script src="/src/common/common.ts"></script>
+    <!-- endbuild -->
 
     <!-- build:manager-module -->
     <script src="/src/manager/main.ts"></script>
