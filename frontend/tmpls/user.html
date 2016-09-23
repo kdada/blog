@@ -9,12 +9,22 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>a@a.a</td>
-            <td>a</td>
-            <td>2016-1-2 12:02:01</td>
-            <td><a class="text-danger">禁止登录</a></td>
+        <tr *ngFor="let user of users ">
+            <td>{{user.Id}}</td>
+            <td>{{user.Email}}</td>
+            <td>{{user.Name}}</td>
+            <td>{{user.CreateTime}}</td>
+            <td>
+                <a (click)="Unban(user.Id)" *ngIf="user.Status==2" class="text-info">允许登录</a>
+                <a  (click)="Ban(user.Id)" *ngIf="user.Status==1" class="text-danger">禁止登录</a>
+            </td>
         </tr>
     </tbody>
 </table>
+<nav>
+  <ul class="pagination">
+    <li><a (click)="ShowPage(1)">&laquo;</a></li>
+    <li *ngFor="let p of pagesNum"><a (click)="ShowPage(p)">{{p}}</a></li>
+    <li><a (click)="ShowPage(pages)">&raquo;</a></li>
+  </ul>
+</nav>

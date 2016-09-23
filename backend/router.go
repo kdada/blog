@@ -13,5 +13,8 @@ func routers() router.Router {
 	var manager = web.NewSpaceRouter("manager")
 	manager.AddChild(web.NewMutableFuncRouter("", controllers.Manager))
 	root.AddChild(manager)
+	root.AddChild(web.NewControllerRouter(new(controllers.UserManagerController)))
+	root.AddChild(web.NewControllerRouter(new(controllers.CategoryManagerController)))
+
 	return root
 }

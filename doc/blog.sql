@@ -89,3 +89,20 @@ comment on column blog.reply.content is '回复内容';
 comment on column blog.reply.create_time is '回复时间';
 comment on column blog.reply.status is '状态码:1-正常,2-已隐藏,3-已屏蔽,4-已删除';
 
+
+--创建文件表
+drop table if exists blog.file;
+create table blog.file (
+    id serial primary key not null,
+	file_name varchar(1000) not null,
+    content text not null,
+    upload_time timestamp with time zone not null default now(),
+    status integer not null  default 1
+);
+--表和字段备注
+comment on table blog.file is '文件表';
+comment on column blog.file.id is '文件id';
+comment on column blog.file.file_name is '文件名';
+comment on column blog.file.content is '文件描述';
+comment on column blog.file.upload_time is '上传时间';
+comment on column blog.file.status is '状态码:1-正常,2-已删除';

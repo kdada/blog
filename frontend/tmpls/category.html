@@ -9,17 +9,22 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>某个分类</td>
-            <td>显示</td>
-            <td>2016-1-2 12:02:01</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>某个分类2</td>
-            <td>隐藏</td>
-            <td>2016-1-2 12:02:01</td>
+        <tr *ngFor="let cate of categories ">
+            <td>{{cate.Id}}</td>
+            <td>{{cate.Name}}</td>
+            <td>{{cate.CreateTime}}</td>
+            <td>
+                <a (click)="Show(cate.Id)" *ngIf="cate.Status==2" class="text-info">显示</a>
+                <a (click)="Hide(cate.Id)" *ngIf="cate.Status==1" class="text-danger">隐藏</a>
+                <a (click)="Delete(cate.Id)" class="text-danger">删除</a>
+            </td>
         </tr>
     </tbody>
 </table>
+<nav>
+    <ul class="pagination">
+        <li><a (click)="ShowPage(1)">&laquo;</a></li>
+        <li *ngFor="let p of pagesNum"><a (click)="ShowPage(p)">{{p}}</a></li>
+        <li><a (click)="ShowPage(pages)">&raquo;</a></li>
+    </ul>
+</nav>

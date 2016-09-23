@@ -10,7 +10,7 @@ import { FileComponent } from './file/file.component';
 import { ArticleComponent } from './article/article.component';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, RouterMWP],
+    imports: [BrowserModule, FormsModule, HttpModule, RouterMWP],
     declarations: [AppComponent, UserComponent, CategoryComponent, FileComponent, ArticleComponent],
     bootstrap: [AppComponent]
 })
