@@ -12,7 +12,7 @@ export class UserService {
     }
     // ListNum 返回列表总页数
     ListNum() {
-        return this.http.post("/usermanager/listnum", {}).toPromise().then(resp => {
+        return this.http.post("/user/listnum", {}).toPromise().then(resp => {
             if (resp.ok) {
                 var obj = resp.json()
                 if (obj.Code == 0) {
@@ -24,7 +24,7 @@ export class UserService {
     }
     // List 返回指定页的用户列表
     List(page: number) {
-        return this.http.post("/usermanager/list", SearchParams({
+        return this.http.post("/user/list", SearchParams({
             Page: page
         })).toPromise().then(resp => {
             if (resp.ok) {
@@ -39,7 +39,7 @@ export class UserService {
 
     // Ban 禁止用户登陆
     Ban(userId: number) {
-        return this.http.post("/usermanager/ban", SearchParams({
+        return this.http.post("/user/ban", SearchParams({
             User: userId
         })).toPromise().then(resp => {
             if (resp.ok) {
@@ -52,7 +52,7 @@ export class UserService {
 
     // Unban 允许用户登陆
     Unban(userId: number) {
-        return this.http.post("/usermanager/unban", SearchParams({
+        return this.http.post("/user/unban", SearchParams({
             User: userId
         })).toPromise().then(resp => {
             if (resp.ok) {

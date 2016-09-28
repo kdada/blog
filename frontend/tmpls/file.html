@@ -1,18 +1,51 @@
+<a (click)="dialog = !dialog">上传文件</a>
 <table class="table table-bordered">
     <thead>
         <tr>
             <td>ID</td>
-            <td>URL</td>
-            <td>所属文章</td>
+            <td>文件</td>
             <td>上传时间</td>
+            <td>操作</td>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>/xxx/xxx.jpg</td>
-            <td>xxxxxxxx</td>
-            <td>2016-1-2 12:02:01</td>
+        <tr *ngFor="let f of files ">
+            <td>{{f.Id}}</td>
+            <td><a href="/files/{{f.FileName}}" target="_blank">{{f.FileName}}</a></td>
+            <td>{{f.UploadTime}}</td>
+            <td>
+                <a (click)="Delete(f.Id)" class="text-danger">删除</a>
+            </td>
         </tr>
     </tbody>
 </table>
+<nav>
+    <ul class="pagination">
+        <li><a (click)="ShowPage(1)">&laquo;</a></li>
+        <li *ngFor="let p of pagesNum"><a (click)="ShowPage(p)">{{p}}</a></li>
+        <li><a (click)="ShowPage(pages)">&raquo;</a></li>
+    </ul>
+</nav>
+
+<div *ngIf="dialog" class="modal" style="display:block;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button (click)="dialog = !dialog" type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">添加分类</h4>
+            </div>
+            <form #form action="/file/upload" method="post" enctype="multipart/form-data" target="blankFrame">
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">文件</span>
+                        <input type="file" class="form-control" name="File">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="dialog = !dialog" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button (click)="Upload(form)" type="button" class="btn btn-primary">上传</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

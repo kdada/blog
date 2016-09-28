@@ -16,7 +16,7 @@ const filePath = "./upload/files/"
 
 // 文件服务
 type FileService struct {
-	DB sql.DB
+	DB *sql.DB
 }
 
 // FileNum 返回文件总数
@@ -25,9 +25,9 @@ func (this *FileService) FileNum() (count int, err error) {
 	return
 }
 
-// List 返回文件列表
-func (this *FileService) List(page int, count int) (details []*models.FileDetail, err error) {
-	_, err = this.DB.Query("select * from file where status = 1 limit $1 offset $2", count, (page-1)*count).Scan(&details)
+// ListAll 返回文件列表
+func (this *FileService) ListAll(page int, count int) (details []*models.FileDetail, err error) {
+	_, err = this.DB.Query("select * from file where status = 1 order by id asc limit $1 offset $2", count, (page-1)*count).Scan(&details)
 	return
 }
 

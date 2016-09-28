@@ -14,4 +14,6 @@ func init() {
 	meta.GlobalValueContainer.Register(nil, (*UserService)(nil))
 	meta.GlobalValueContainer.Register(nil, (*CategoryService)(nil))
 	meta.GlobalValueContainer.Register(nil, (*FileService)(nil))
+	meta.GlobalValueContainer.Register(nil, (*ArticleService)(nil))
+
 }

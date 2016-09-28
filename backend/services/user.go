@@ -19,7 +19,7 @@ func (this *UserService) UserNum() (count int, err error) {
 
 // ListAll 列出指定页码的用户详细信息
 func (this *UserService) ListAll(page int, count int) (details []*models.UserDetail, err error) {
-	_, err = this.DB.Query("select * from account order by status asc limit $1 offset $2", count, (page-1)*count).Scan(&details)
+	_, err = this.DB.Query("select * from account order by status asc,id asc limit $1 offset $2", count, (page-1)*count).Scan(&details)
 	return
 }
 

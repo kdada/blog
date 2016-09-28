@@ -17,9 +17,9 @@ func (this *CategoryService) AvailableNum() (count int, err error) {
 	return
 }
 
-// ListAll 列出指定页码的处于正常状态的用户详细信息
+// ListAvailable 列出指定页码的处于正常状态的用户详细信息
 func (this *CategoryService) ListAvailable(page int, count int) (details []*models.CategoryDetail, err error) {
-	_, err = this.DB.Query("select * from category where status = 1 limit $1 offset $2", count, (page-1)*count).Scan(&details)
+	_, err = this.DB.Query("select * from category where status = 1 order by id asc limit $1 offset $2", count, (page-1)*count).Scan(&details)
 	return
 }
 
@@ -31,7 +31,7 @@ func (this *CategoryService) CategoryNum() (count int, err error) {
 
 // ListAll 列出指定页码的处于正常状态和隐藏状态的用户详细信息
 func (this *CategoryService) ListAll(page int, count int) (details []*models.CategoryDetail, err error) {
-	_, err = this.DB.Query("select * from category where status = 1 or status = 2 limit $1 offset $2", count, (page-1)*count).Scan(&details)
+	_, err = this.DB.Query("select * from category where status = 1 or status = 2 order by status asc,id asc limit $1 offset $2", count, (page-1)*count).Scan(&details)
 	return
 }
 

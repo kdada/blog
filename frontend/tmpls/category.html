@@ -1,11 +1,11 @@
-<a>添加分类</a>
+<a (click)="dialog = !dialog">添加分类</a>
 <table class="table table-bordered">
     <thead>
         <tr>
             <td>ID</td>
             <td>分类名称</td>
-            <td>状态</td>
             <td>创建时间</td>
+            <td>操作</td>
         </tr>
     </thead>
     <tbody>
@@ -28,3 +28,25 @@
         <li><a (click)="ShowPage(pages)">&raquo;</a></li>
     </ul>
 </nav>
+
+<div *ngIf="dialog" class="modal" style="display:block;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button (click)="dialog = !dialog" type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">添加分类</h4>
+            </div>
+            <div class="text-danger">{{createError}}</div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon">名称</span>
+                    <input [(ngModel)]="name" type="text" class="form-control" placeholder="2-50个字之间">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button (click)="dialog = !dialog" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button (click)="Create()" type="button" class="btn btn-primary">添加</button>
+            </div>
+        </div>
+    </div>
+</div>

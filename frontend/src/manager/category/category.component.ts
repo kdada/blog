@@ -11,7 +11,11 @@ export class CategoryComponent {
     private pagesNum: number[]
     private currentNum: number
     private categories: CategoryDetail[]
+    private dialog:boolean
+    private name: string
+    private createError: string
     constructor(private categoryService: CategoryService) {
+        this.dialog = false
         categoryService.ListNum().then(v => {
             this.pages = v
             if (v > 0) {
@@ -45,6 +49,26 @@ export class CategoryComponent {
     Show(id: number) {
         this.categoryService.Show(id).then(v => {
             this.ShowPage(this.currentNum)
+        })
+    }
+
+    // Delete 删除
+    Delete(id: number) {
+        this.categoryService.Delete(id).then(v => {
+            this.ShowPage(this.currentNum)
+        })
+    }
+
+    // Create 创建
+    Create() {
+        this.categoryService.Create(this.name).then(v => {
+            if (v) {
+                this.createError = v
+            } else {
+                this.name = ""
+                this.dialog = false
+                this.ShowPage(this.currentNum)
+            }
         })
     }
 }
