@@ -1,0 +1,12 @@
+.code-line {
+    display: table-cell;
+    overflow-x: hidden;
+    padding-right: 0.5em;
+
+}
+
+.code-line + .code-block {
+     display: table-cell;
+     width: 100%;
+     padding-right: 1em;
+}

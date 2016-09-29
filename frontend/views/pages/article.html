@@ -1,0 +1,90 @@
+{{define "Head"}}
+<title>Kira的博客</title>
+{{end}}
+{{define "HeadScript"}}
+<link rel="stylesheet" href="/css/markdown.css"/>
+<link rel="stylesheet" href="/css/highlight/github-gist.css"/>
+<link rel="stylesheet" href="/css/code.css"/>
+{{end}}
+{{define "FootScript"}}
+<script src="/js/lib/highlight.pack.js"></script>
+<script src="/js/lib/showdown.min.js"></script>
+<script src="/js/article/markdown.js"></script>
+<script src="/js/article/page.js"></script>
+{{end}}
+
+
+{{define "Content"}}
+<h1>{{.Article.Title}}</h1>
+<article class="markdown-body">
+{{.Article.Content}}
+</article>
+<p></p>
+<p></p>
+<div class="alert alert-success" role="alert">
+  <ul class="list-unstyled">
+    {{if .PreArticle}}
+    <li>上一篇：<a href="/a{{.PreArticle.Id}}.html">{{.PreArticle.Title}}</a></li>
+    {{end}}
+    {{if .NextArticle}}
+    <li>下一篇：<a href="/a{{.NextArticle.Id}}.html">{{.NextArticle.Title}}</a></li>
+    {{end}}
+    <li>发表时间：{{time .Article.CreateTime}}</li>
+    {{$showUpdate := .Article.UpdateTime.After .Article.CreateTime}}
+    {{if $showUpdate}}
+    <li>更新时间：{{time .Article.UpdateTime}}</li>
+    {{end}}
+    <li>文章分类：<a href="/c{{.Article.Category}}">{{.Article.Name}}</a></li>
+    <li>版权声明：<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">自由转载-非商用-非衍生-保持署名(CC 3.0)</a></li>
+  </ul>
+</div>
+{{$login := .SESSION.Bool "Login"}}
+<div class="h3">评论列表 {{if $login}}<button class="btn btn-default  btn-xs" id="ShowReply">发表评论</button>{{end}}</div>
+<div class="reply">
+  {{if gt .ReplyPage 0}}
+  <div class="reply-content">
+    {{range .Replies}}
+    <div class="well">
+     <div id="r{{.Id}}" class="media-heading h5">{{.Floor}}楼 {{time .CreateTime}}  <!--<button class="btn btn-default  btn-xs">回复</button> --></div>
+      <h5 class="media-heading">{{.Name}}:</h5>
+      {{.Content}}
+    </div>
+    {{end}}
+  </div>
+  <nav class="text-center">
+    <ul class="pagination" data-article="{{.Article.Id}}" data-pages="{{.ReplyPage}}" data-current="{{if .CurrentPage}}{{.CurrentPage}}{{else}}1{{end}}">
+    </ul>
+  </nav>
+  {{else}}
+  <div class="well">
+      暂无评论
+    </div>
+  {{end}}
+</div>
+{{if $login}}
+<div class="modal fade" id="Reply" tabindex="-1" role="dialog" aria-labelledby="ReplyLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="ReplyLabel">发表评论</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger hidden" role="alert" id="loginError"></div>
+        <form>
+          <div class="form-group">
+            <textarea type="text" class="form-control" id="replyContent"></textarea>
+            <input type="hidden" class="form-control" id="replyId" value="0">
+            <input type="hidden" class="form-control" id="articleId" value="{{.Article.Id}}">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button id="replyButton" type="button" class="btn btn-primary">发表</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{end}}
+{{end}}

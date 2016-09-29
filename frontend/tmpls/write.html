@@ -22,7 +22,7 @@
         <textarea #editor [(ngModel)]="content" (input)="Changed(editor)" [style.height]="height+'px'" [style.overflow]="'hidden'" class="form-control auto-textarea" [disabled]="!writable"></textarea>
     </div>
     <div [style.display]="status=='preview'?'block':'none'">
-        <div #wall class="generate-area" [style.minHeight]="height+'px'"></div>
+        <div #wall class="generate-area markdown-body" [style.minHeight]="height+'px'"></div>
     </div>
 </div>
 <div *ngIf="info" class="alert alert-info">{{info}}</div>

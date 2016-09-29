@@ -12,6 +12,12 @@ type ArticleService struct {
 	DB *sql.DB
 }
 
+// NewestArticles 获取最新文章
+func (this *ArticleService) NewestArticles() (details []*models.ArticleDetail, err error) {
+	_, err = this.DB.Query("select * from article where status = 1 order by update_time desc limit 10").Scan(&details)
+	return
+}
+
 // AvailableArticle 获取指定id的正常状态的文章详情
 func (this *ArticleService) AvailableArticle(article int) (detail *models.ArticleDetail, err error) {
 	_, err = this.DB.Query("select a.*,c.name from article a,category c where a.id = $1 and a.status = 1 and  a.category = c.id", article).Scan(&detail)
@@ -114,4 +120,16 @@ func (this *ArticleService) Untop(article int) error {
 // Delete 删除文章
 func (this *ArticleService) Delete(article int) error {
 	return this.DB.Exec("update article set status=3 where id = $1", article).Error()
+}
+
+// PreviousArticle 指定文章同一分类的上一篇文章
+func (this *ArticleService) PreviousArticle(article, category int) (detail *models.ArticleDetail, err error) {
+	_, err = this.DB.Query("select * from article where status = 1 and id < $1 and category = $2 order by id desc limit 1", article, category).Scan(&detail)
+	return
+}
+
+// NextArticle 指定文章同一分类的下一篇文章
+func (this *ArticleService) NextArticle(article, category int) (detail *models.ArticleDetail, err error) {
+	_, err = this.DB.Query("select * from article where status = 1 and id > $1 and category = $2 order by id asc limit 1", article, category).Scan(&detail)
+	return
 }
