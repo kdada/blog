@@ -12,7 +12,12 @@ type CategoryController struct {
 	CategoryService *services.CategoryService
 }
 
-// List 显示分类列表,每页10行
+// Categories 获取所有分类
+func (this *CategoryController) Categories() web.PostResult {
+	return this.returnPostResult(this.CategoryService.Categories())
+}
+
+// List 获取分类列表,每页10行
 func (this *CategoryController) List(params struct {
 	Page int `!;>0` //页码
 }) web.PostResult {

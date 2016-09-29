@@ -27,7 +27,7 @@ func (this *FileService) FileNum() (count int, err error) {
 
 // ListAll 返回文件列表
 func (this *FileService) ListAll(page int, count int) (details []*models.FileDetail, err error) {
-	_, err = this.DB.Query("select * from file where status = 1 order by id asc limit $1 offset $2", count, (page-1)*count).Scan(&details)
+	_, err = this.DB.Query("select * from file where status = 1 order by id desc limit $1 offset $2", count, (page-1)*count).Scan(&details)
 	return
 }
 

@@ -14,7 +14,7 @@ type ArticleService struct {
 
 // AvailableArticle 获取指定id的正常状态的文章详情
 func (this *ArticleService) AvailableArticle(article int) (detail *models.ArticleDetail, err error) {
-	_, err = this.DB.Query("select * from article where id = $1 and status = 1", article).Scan(&detail)
+	_, err = this.DB.Query("select a.*,c.name from article a,category c where a.id = $1 and a.status = 1 and  a.category = c.id", article).Scan(&detail)
 	return
 }
 
@@ -26,13 +26,18 @@ func (this *ArticleService) AvailableNum() (count int, err error) {
 
 // ListAvailable 列出指定页码的处于正常状态的文章
 func (this *ArticleService) ListAvailable(page int, count int) (details []*models.ArticleDetail, err error) {
-	_, err = this.DB.Query("select * from article where status = 1 order by top desc,id asc limit $1 offset $2", count, (page-1)*count).Scan(&details)
+	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,100) as content,a.category,c.name,
+	a.top,a.create_time,a.update_time,a.status
+	from blog.article a,blog.category c
+	where a.status = 1 and a.category = c.id
+	order by a.top desc,a.id desc
+	limit $1 offset $2`, count, (page-1)*count).Scan(&details)
 	return
 }
 
 // Article 获取指定id的文章详情
 func (this *ArticleService) Article(article int) (detail *models.ArticleDetail, err error) {
-	_, err = this.DB.Query("select * from article where id = $1", article).Scan(&detail)
+	_, err = this.DB.Query("select a.*,c.name from article a,category c where a.id = $1 and a.category = c.id", article).Scan(&detail)
 	return
 }
 
@@ -44,30 +49,41 @@ func (this *ArticleService) ArticleNum() (count int, err error) {
 
 // ListAll 列出指定页码的处于正常状态和隐藏状态的文章
 func (this *ArticleService) ListAll(page int, count int) (details []*models.ArticleDetail, err error) {
-	_, err = this.DB.Query("select * from article where status = 1 or status = 2 order by top desc,status asc,id asc limit $1 offset $2", count, (page-1)*count).Scan(&details)
+	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,100) as content,a.category,c.name,
+	a.top,a.create_time,a.update_time,a.status
+	from article a,category c
+	where (a.status = 1 or a.status = 2) and a.category = c.id
+	order by a.top desc,a.status asc,a.id desc
+	limit $1 offset $2`, count, (page-1)*count).Scan(&details)
 	return
 }
 
 // SpecArticleNum 返回正常状态和隐藏状态的文章总数
 func (this *ArticleService) SpecArticleNum(category int) (count int, err error) {
-	_, err = this.DB.Query("select count(*) from article where cateory = $1 and status = 1 or status = 2", category).Scan(&count)
+	_, err = this.DB.Query("select count(*) from article where category = $1 and status = 1 or status = 2", category).Scan(&count)
 	return
 }
 
 // ListSpec 列出指定页码的处于正常状态和隐藏状态的文章
 func (this *ArticleService) ListSpec(category int, page int, count int) (details []*models.ArticleDetail, err error) {
-	_, err = this.DB.Query("select * from article where category = $3 and status = 1 or status = 2 order by top desc,status asc,id asc  limit $1 offset $2", count, (page-1)*count, category).Scan(&details)
+	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,100) as content,a.category,c.name,
+	a.top,a.create_time,a.update_time,a.status
+	from blog.article a,blog.category c
+	where category = $3 and (a.status = 1 or a.status = 2) and a.category = c.id
+	order by top a.desc,a.status asc,a.id desc
+	limit $1 offset $2`, count, (page-1)*count, category).Scan(&details)
 	return
 }
 
 // Create 创建一篇文章并返回文章id
-func (this *ArticleService) Create(article *models.ArticleInfo) (int, error) {
-	return this.DB.Exec("insert into article(category,title,content) values($1,$2,$3)", article.Category, article.Title, article.Content).LastInsertId()
+func (this *ArticleService) Create(article *models.ArticleInfo) (id int, err error) {
+	_, err = this.DB.Query("insert into article(category,title,content) values($1,$2,$3) returning id", article.Category, article.Title, article.Content).Scan(&id)
+	return
 }
 
 // Update 更新一篇文章
 func (this *ArticleService) Update(article *models.ArticleData) error {
-	return this.DB.Exec("update article set title=$1,content=$2,update_time=now() where id = $3", article.Title, article.Content, article.Id).Error()
+	return this.DB.Exec("update article set category=$4,title=$1,content=$2,update_time=now() where id = $3", article.Title, article.Content, article.Id, article.Category).Error()
 }
 
 // Move 移动到新的分类

@@ -45,10 +45,14 @@ export class FileService {
             var xhr = new XMLHttpRequest()
             xhr.open("post", "/file/upload", true)
             xhr.onreadystatechange = e => {
-                if (xhr.readyState == 4) {
-                    return <string>xhr.responseBody
+                if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status < 300) {
+                    var obj = JSON.parse(<string>xhr.response)
+                    if (obj.Code == 0) {
+                        resolve(<string>obj.Data.Name)
+                        return
+                    }
+                    resolve("")
                 }
-                return ""
             }
             xhr.onerror = e => {
                 reject(xhr)

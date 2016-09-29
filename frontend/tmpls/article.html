@@ -1,20 +1,38 @@
+<a routerLink="/write/0">写文章</a>
 <table class="table table-bordered">
     <thead>
         <tr>
             <td>ID</td>
             <td>文章名称</td>
+            <td>概要</td>
             <td>分类</td>
             <td>创建时间</td>
             <td>更新时间</td>
+            <td>操作</td>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>名称</td>
-            <td>某个分类</td>
-            <td>2016-1-2 12:02:01</td>
-            <td>2016-1-2 12:02:01</td>
+         <tr *ngFor="let a of articles ">
+            <td>{{a.Id}}</td>
+            <td><a routerLink="/write/{{a.Id}}">{{a.Title}}</a></td>
+            <td>{{a.Content}}</td>
+            <td>{{a.Name}}</td>
+            <td>{{a.CreateTime}}</td>
+            <td>{{a.UpdateTime}}</td>
+            <td>
+                <a (click)="Top(a.Id)" *ngIf="a.Top==0" class="text-info">置顶</a>
+                <a (click)="Untop(a.Id)" *ngIf="a.Top!=0" class="text-info">取消置顶</a>
+                <a (click)="Show(a.Id)" *ngIf="a.Status==2" class="text-info">显示</a>
+                <a (click)="Hide(a.Id)" *ngIf="a.Status==1" class="text-danger">隐藏</a>
+                <a (click)="Delete(a.Id)" class="text-danger">删除</a>
+            </td>
         </tr>
     </tbody>
 </table>
+<nav>
+    <ul class="pagination">
+        <li><a (click)="ShowPage(1)">&laquo;</a></li>
+        <li *ngFor="let p of pagesNum"><a (click)="ShowPage(p)">{{p}}</a></li>
+        <li><a (click)="ShowPage(pages)">&raquo;</a></li>
+    </ul>
+</nav>

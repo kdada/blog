@@ -39,7 +39,7 @@ export class FileComponent {
     // Upload 上传
     Upload(form: HTMLFormElement) {
         this.fileService.Upload(form).then(s => {
-            console.log(s)
+            this.dialog = false
         })
     }
 

@@ -35,6 +35,12 @@ func (this *CategoryService) ListAll(page int, count int) (details []*models.Cat
 	return
 }
 
+// Categories 列出指定页码的处于正常状态和隐藏状态的用户详细信息
+func (this *CategoryService) Categories() (details []*models.CategoryDetail, err error) {
+	_, err = this.DB.Query("select * from category where status = 1 or status = 2 order by status asc,id asc").Scan(&details)
+	return
+}
+
 // Hide 隐藏分类
 func (this *CategoryService) Hide(categoryId int) error {
 	return this.DB.Exec("update category set status = 2 where id = $1", categoryId).Error()

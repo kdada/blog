@@ -8,10 +8,11 @@ import { UserComponent } from "./user/user.component";
 import { CategoryComponent } from './category/category.component';
 import { FileComponent } from './file/file.component';
 import { ArticleComponent } from './article/article.component';
+import { WriteComponent } from './write/write.component';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, HttpModule, RouterMWP],
-    declarations: [AppComponent, UserComponent, CategoryComponent, FileComponent, ArticleComponent],
+    declarations: [AppComponent, UserComponent, CategoryComponent, FileComponent, ArticleComponent,WriteComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule {

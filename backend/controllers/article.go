@@ -49,6 +49,13 @@ func (this *ArticleController) ListNum(params struct {
 
 }
 
+// Article 返回指定文章信息
+func (this *ArticleController) Article(params struct {
+	Article int `!;>0` //文章id
+}) web.PostResult {
+	return this.returnPostResult(this.ArticleService.Article(params.Article))
+}
+
 // Create 创建一篇文章并返回文章id
 func (this *ArticleController) Create(article *models.ArticleInfo) web.PostResult {
 	var id, err = this.ArticleService.Create(article)

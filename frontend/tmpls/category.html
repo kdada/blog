@@ -14,6 +14,7 @@
             <td>{{cate.Name}}</td>
             <td>{{cate.CreateTime}}</td>
             <td>
+                <a routerLink="/article/{{cate.Id}}">查看文章</a>
                 <a (click)="Show(cate.Id)" *ngIf="cate.Status==2" class="text-info">显示</a>
                 <a (click)="Hide(cate.Id)" *ngIf="cate.Status==1" class="text-danger">隐藏</a>
                 <a (click)="Delete(cate.Id)" class="text-danger">删除</a>

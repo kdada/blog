@@ -6,19 +6,18 @@ import (
 
 // 文章创建信息
 type ArticleInfo struct {
-	Category int    `!;>0`              //文章分类Id
-	Title    string `!;clen>2&&clen<20` //文章标题
-	Content  string `!;clen>2`          //文章内容
+	Category int    `!;>0`                //文章分类Id
+	Title    string `!;clen>=2&&clen<=20` //文章标题
+	Content  string `!;clen>=2`           //文章内容
 }
 
 // 文章修改信息
 type ArticleData struct {
-	Id      int    `!;>0`              //文章id
-	Title   string `!;clen>2&&clen<20` //文章标题
-	Content string `!;clen>2`          //文章内容
+	ArticleInfo
+	Id int `!;>0` //文章id
 }
 
-// 文章详情
+// 文章概要
 type ArticleDetail struct {
 	Id         int       //文章id
 	Title      string    //文章标题
