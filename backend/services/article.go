@@ -14,7 +14,7 @@ type ArticleService struct {
 
 // NewestArticles 获取最新文章
 func (this *ArticleService) NewestArticles() (details []*models.ArticleDetail, err error) {
-	_, err = this.DB.Query("select * from article where status = 1 order by update_time desc limit 10").Scan(&details)
+	_, err = this.DB.Query("select * from article where status = 1 order by id desc limit 10").Scan(&details)
 	return
 }
 
@@ -66,7 +66,24 @@ func (this *ArticleService) ListAll(page int, count int) (details []*models.Arti
 
 // SpecArticleNum 返回正常状态和隐藏状态的文章总数
 func (this *ArticleService) SpecArticleNum(category int) (count int, err error) {
-	_, err = this.DB.Query("select count(*) from article where category = $1 and status = 1 or status = 2", category).Scan(&count)
+	_, err = this.DB.Query("select count(*) from article where category = $1 and (status = 1 or status = 2)", category).Scan(&count)
+	return
+}
+
+// SpecAvailableNum 返回正常状态的文章总数
+func (this *ArticleService) SpecAvailableNum(category int) (count int, err error) {
+	_, err = this.DB.Query("select count(*) from article where category = $1 and status = 1", category).Scan(&count)
+	return
+}
+
+// ListSpecAvailable 列出指定页码的处于正常状态的文章
+func (this *ArticleService) ListSpecAvailable(category int, page int, count int) (details []*models.ArticleDetail, err error) {
+	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,100) as content,a.category,c.name,
+	a.top,a.create_time,a.update_time,a.status
+	from blog.article a,blog.category c
+	where category = $3 and a.status = 1 and a.category = c.id
+	order by a.top desc,a.status asc,a.id desc
+	limit $1 offset $2`, count, (page-1)*count, category).Scan(&details)
 	return
 }
 
@@ -76,7 +93,7 @@ func (this *ArticleService) ListSpec(category int, page int, count int) (details
 	a.top,a.create_time,a.update_time,a.status
 	from blog.article a,blog.category c
 	where category = $3 and (a.status = 1 or a.status = 2) and a.category = c.id
-	order by top a.desc,a.status asc,a.id desc
+	order by a.top desc,a.status asc,a.id desc
 	limit $1 offset $2`, count, (page-1)*count, category).Scan(&details)
 	return
 }
@@ -123,13 +140,21 @@ func (this *ArticleService) Delete(article int) error {
 }
 
 // PreviousArticle 指定文章同一分类的上一篇文章
-func (this *ArticleService) PreviousArticle(article, category int) (detail *models.ArticleDetail, err error) {
-	_, err = this.DB.Query("select * from article where status = 1 and id < $1 and category = $2 order by id desc limit 1", article, category).Scan(&detail)
-	return
+func (this *ArticleService) PreviousArticle(article, category int) (*models.ArticleDetail, error) {
+	var detail *models.ArticleDetail
+	var count, err = this.DB.Query("select * from article where status = 1 and id < $1 and category = $2 order by id desc limit 1", article, category).Scan(&detail)
+	if err == nil && count <= 0 {
+		return nil, nil
+	}
+	return detail, err
 }
 
 // NextArticle 指定文章同一分类的下一篇文章
-func (this *ArticleService) NextArticle(article, category int) (detail *models.ArticleDetail, err error) {
-	_, err = this.DB.Query("select * from article where status = 1 and id > $1 and category = $2 order by id asc limit 1", article, category).Scan(&detail)
-	return
+func (this *ArticleService) NextArticle(article, category int) (*models.ArticleDetail, error) {
+	var detail *models.ArticleDetail
+	var count, err = this.DB.Query("select * from article where status = 1 and id > $1 and category = $2 order by id asc limit 1", article, category).Scan(&detail)
+	if err == nil && count <= 0 {
+		return nil, nil
+	}
+	return detail, err
 }

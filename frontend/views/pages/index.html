@@ -1,74 +1,36 @@
-{{define "Content"}}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">标题</h3>
-        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
+{{define "Content"}} 
+{{if gt .TotalPages 0}}
+<div>
+    {{range .Articles}}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{if .IsTop}}<span class="glyphicon glyphicon-fire"></span>{{end}}<a href="/a{{.Id}}.html"> {{.Title}}</a></h3>
+            <div class="text-muted blog-subtitle">发表时间:{{time .CreateTime}}</div>
+        </div>
+        <a href="/a{{.Id}}.html"><div class="panel-body article-summary">{{.Content}}</div></a>
     </div>
-    <div class="panel-body">
-        文章第一段的内容
-    </div>
+    {{end}}
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">标题</h3>
-        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
-    </div>
-    <div class="panel-body">
-        内容
-    </div>
+<nav class="text-center">
+    <ul class="pagination">
+        <li {{if eq .CurrentPage 1}}class="disabled" {{end}}>
+            <a href="{{if eq .CurrentPage 1}}javascript:void(0);{{else}}{{.FirstUrl}}{{end}}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {{$G := .}} {{range $k,$v := until .StartPage .EndPage}} {{$first := eq $v 1}} {{$current := eq $v $G.CurrentPage}}
+        <li {{if $current}}class="active" {{end}}><a href="{{if $current}}javascript:void(0);{{else if $first}}{{$G.FirstUrl}}{{else}}{{$G.BaseUrl}}{{$v}}.html{{end}}">{{$v}}</a></li>
+        {{end}}
+        <li {{if eq .CurrentPage .TotalPages}}class="disabled" {{end}}>
+            <a href="{{if eq .CurrentPage .TotalPages}}javascript:void(0);{{else}}{{.BaseUrl}}{{.TotalPages}}.html{{end}}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+{{else}}
+<div class="well">
+    暂无文章
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">标题</h3>
-        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
-    </div>
-    <div class="panel-body">
-        内容
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">标题</h3>
-        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
-    </div>
-    <div class="panel-body">
-        内容
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">标题</h3>
-        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
-    </div>
-    <div class="panel-body">
-        内容
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">标题</h3>
-        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
-    </div>
-    <div class="panel-body">
-        内容
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">标题</h3>
-        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
-    </div>
-    <div class="panel-body">
-        内容
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">标题</h3>
-        <div class="text-muted blog-subtitle">发表时间:2016-10-10 12:23:25 阅读:100</div>
-    </div>
-    <div class="panel-body">
-        内容
-    </div>
-</div>
+{{end}} 
 {{end}}

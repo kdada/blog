@@ -7,9 +7,9 @@
             <div class="panel-heading">文章分类</div>
             <div class="panel-body">
                 <ul class="nav nav-pills nav-stacked blog-list">
-                    <li><a href="#">第一分类</a></li>
-                    <li><a href="#">第二分类</a></li>
-                    <li><a href="#">第三分类</a></li>
+                    {{range $k,$v := .Categories}}
+                    <li><a href="/c{{$v.Id}}">{{$v.Name}}</a></li>
+                    {{end}}
                 </ul>
             </div>
         </div>
@@ -17,16 +17,9 @@
             <div class="panel-heading">最新文章</div>
             <div class="panel-body">
                 <ul class="nav nav-default blog-list">
-                    <li><a href="#">第一文章第一文章第一文章第一文章第一文章第一文章第一文章第一文章</a></li>
-                    <li><a href="#">第二文章</a></li>
-                    <li><a href="#">第三文章</a></li>
-                    <li><a href="#">第四文章</a></li>
-                    <li><a href="#">第五文章</a></li>
-                    <li><a href="#">第六文章</a></li>
-                    <li><a href="#">第七文章</a></li>
-                    <li><a href="#">第八文章</a></li>
-                    <li><a href="#">第九文章</a></li>
-                    <li><a href="#">第十文章</a></li>
+                    {{range $k,$v := .NewestArticles}}
+                    <li><a href="/a{{$v.Id}}.html">{{$v.Title}}</a></li>
+                    {{end}}
                 </ul>
             </div>
         </div>
@@ -34,9 +27,12 @@
             <div class="panel-heading">最新回复</div>
             <div class="panel-body">
                 <ul class="nav nav-default blog-list">
-                    <li>xxx:<a class="blog-text-hidden" href="#">第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复</a></li>
-                    <li>xxx:<a class="blog-text-hidden" href="#">第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复</a></li>
-                    <li>xxx:<a class="blog-text-hidden" href="#">第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复第一回复</a></li>
+                    {{range $k,$v := .NewestReplies}}
+                    <li>{{$v.Name}} 说:
+                        <!--<a href="/a{{$v.Article}}.html">{{$v.Title}}</a><br/>-->
+                        <a class="blog-text-hidden" href="/a{{$v.Article}}.html#r{{$v.Id}}">{{$v.Content}}</a>
+                    </li>
+                    {{end}}
                 </ul>
             </div>
         </div>
@@ -45,4 +41,13 @@
         {{template "Content" .}}
     </div>
 </div>
+{{end}} 
+
+{{define "Nav"}}
+<hr/>
+{{range $k,$v := .Categories}}
+<li class="visible-xs"><a href="/c{{$v.Id}}">{{$v.Name}}</a></li>
 {{end}}
+{{end}}
+
+{{define "Footer"}} {{end}} 

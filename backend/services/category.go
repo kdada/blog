@@ -11,13 +11,22 @@ type CategoryService struct {
 	DB *sql.DB
 }
 
+func (this *CategoryService) Exist(category int) (bool, error) {
+	var count int
+	var _, err = this.DB.Query("select count(*) from category where id = $1 and status = 1", category).Scan(&count)
+	if count == 1 {
+		return true, nil
+	}
+	return false, err
+}
+
 // AvailableNum 返回可见分类总数
 func (this *CategoryService) AvailableNum() (count int, err error) {
 	_, err = this.DB.Query("select count(*) from category where status = 1").Scan(&count)
 	return
 }
 
-// ListAvailable 列出指定页码的处于正常状态的用户详细信息
+// ListAvailable 列出指定页码的处于正常状态的分类详细信息
 func (this *CategoryService) ListAvailable(page int, count int) (details []*models.CategoryDetail, err error) {
 	_, err = this.DB.Query("select * from category where status = 1 order by id asc limit $1 offset $2", count, (page-1)*count).Scan(&details)
 	return
@@ -29,13 +38,19 @@ func (this *CategoryService) CategoryNum() (count int, err error) {
 	return
 }
 
-// ListAll 列出指定页码的处于正常状态和隐藏状态的用户详细信息
+// ListAll 列出指定页码的处于正常状态和隐藏状态的分类详细信息
 func (this *CategoryService) ListAll(page int, count int) (details []*models.CategoryDetail, err error) {
 	_, err = this.DB.Query("select * from category where status = 1 or status = 2 order by status asc,id asc limit $1 offset $2", count, (page-1)*count).Scan(&details)
 	return
 }
 
-// Categories 列出指定页码的处于正常状态和隐藏状态的用户详细信息
+// AvailableCategories 列出指定页码的处于正常状态的分类详细信息
+func (this *CategoryService) AvailableCategories() (details []*models.CategoryDetail, err error) {
+	_, err = this.DB.Query("select * from category where status = 1 order by id desc").Scan(&details)
+	return
+}
+
+// Categories 列出指定页码的处于正常状态和隐藏状态的分类详细信息
 func (this *CategoryService) Categories() (details []*models.CategoryDetail, err error) {
 	_, err = this.DB.Query("select * from category where status = 1 or status = 2 order by status asc,id asc").Scan(&details)
 	return

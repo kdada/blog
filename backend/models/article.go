@@ -29,3 +29,8 @@ type ArticleDetail struct {
 	UpdateTime time.Time //文章最后更新时间
 	Status     int       //文章状态
 }
+
+// IsTop 返回是否置顶
+func (this *ArticleDetail) IsTop() bool {
+	return this.Top > 0
+}

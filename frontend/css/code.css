@@ -2,7 +2,8 @@
     display: table-cell;
     overflow-x: hidden;
     padding-right: 0.5em;
-
+    text-align: right;
+    color: #55a;
 }
 
 .code-line + .code-block {

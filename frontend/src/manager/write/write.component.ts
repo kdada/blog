@@ -4,6 +4,7 @@ import { CategoryDetail } from '../category/category.model';
 import { ArticleDetail } from '../article/article.model';
 import { WriteService } from './write.service';
 import { FileService } from '../file/file.service';
+import { MarkdownString } from '../../common/markdown';
 
 @Component({
     templateUrl: "/tmpls/write.html",
@@ -108,26 +109,13 @@ export class WriteComponent {
 
     // Changed 当编辑框文本发生变化时触发
     Changed(editor: HTMLTextAreaElement) {
-        console.log(editor)
         this.height = editor.scrollHeight
     }
 
     // Markdown 从content生成md
     Markdown(wall: HTMLDivElement) {
-        wall.innerHTML = this.converter.makeHtml(this.content)
-        var codes = wall.getElementsByTagName("code")
-        for (var i = 0; i < codes.length; i++) {
-            var code = codes.item(i)
-            hljs.highlightBlock(code)
-            code.className += " code-block"
-            var rowNum = code.innerHTML.split('\n').length - 1
-            var rowDiv = document.createElement('div')
-            rowDiv.className = 'code-line'
-            for (var j = 1; j <= rowNum; j++) {
-                rowDiv.innerHTML += '<span>' + j.toString() + '</span>\n'
-            }
-            code.parentElement.insertBefore(rowDiv, code)
-        }
+        wall.innerHTML = ""
+        wall.appendChild(MarkdownString(this.content))
     }
 
     // Upload 上传文件

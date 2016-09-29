@@ -25,7 +25,7 @@ var dest = "../web/"
 var files = {
     views: "./views/**/*.html",
     css: "./css/**/*.css",
-    module: ["./src/**/*.ts","./tmpls/**/*.html"]
+    module: ["./src/**/*.ts", "./tmpls/**/*.html"]
 }
 
 //需要移动的文件和目录
@@ -36,6 +36,7 @@ var output = {
     views: dest + "views",
     css: dest + "css",
     js: dest + "js",
+    ts: dest + "js",
     module: dest + "js"
 }
 
@@ -43,6 +44,7 @@ var output = {
 var urlPaths = {
     css: "/css/",
     js: "/js/",
+    ts: "/js/",
     module: "/js/"
 }
 
@@ -50,6 +52,7 @@ var urlPaths = {
 var exts = {
     css: ".css",
     js: ".js",
+    ts: ".js",
     module: ".js"
 }
 
@@ -151,6 +154,39 @@ function buildJs(prod) {
     }
 }
 
+//根据config.ts编译并合并ts文件,prod决定是否压缩
+function buildTs(prod) {
+    return function () {
+        var src = config.ts
+        console.log(config.ts)
+        if (src) {
+            var s = gulp.src(root)
+                .pipe(pack({
+                    entry: src,
+                    output: {
+                        filename: "[name]"
+                    },
+                    resolve: {
+                        root: path.resolve("./"),
+                        extensions: ["", ".js", ".ts"]
+                    },
+                    module: {
+                        loaders: [
+                            {
+                                test: /\.ts$/,
+                                loaders: ["awesome-typescript-loader"]
+                            }
+                        ]
+                    }
+                }))
+            if (prod) {
+                s.pipe(uglify())
+            }
+            return s.pipe(gulp.dest(output.ts))
+        }
+    }
+}
+
 //根据config.module编译并合并模块,prod决定是否压缩
 function buildModule(prod) {
     return function () {
@@ -227,6 +263,9 @@ gulp.task("dev-css", ["analyze-html"], buildCSS(false))
 //根据config.js合并js
 gulp.task("dev-js", ["analyze-html"], buildJs(false))
 
+//根据config.ts编译ts
+gulp.task("dev-ts", ["analyze-html"], buildTs(false))
+
 //根据config.module编译并合并模块
 gulp.task("dev-module", ["analyze-html"], buildModule(false))
 
@@ -236,11 +275,15 @@ gulp.task("build-css", ["analyze-html"], buildCSS(true))
 //根据config.js合并压缩js
 gulp.task("build-js", ["analyze-html"], buildJs(true))
 
+//根据config.ts编译ts
+gulp.task("build-ts", ["analyze-html"], buildTs(true))
+
 //根据config.module编译并合并压缩模块
 gulp.task("build-module", ["analyze-html"], buildModule(true))
 
+
 //资源md5标记
-gulp.task("md5", ["build-html", "build-css", "build-js", "build-module", "move-files"], function () {
+gulp.task("md5", ["build-html", "build-css", "build-js", "build-ts", "build-module", "move-files"], function () {
     return gulp.src([output.css + "/**/*.css", output.js + "/**/*.js"], {
         base: dest
     })
@@ -260,7 +303,7 @@ gulp.task("clean", function () {
 })
 
 //开发环境任务
-gulp.task("default", ["build-html", "dev-css", "dev-js", "dev-module", "move-files"])
+gulp.task("default", ["build-html", "dev-css", "dev-js", "dev-ts", "dev-module", "move-files"])
 
 //生产环境任务
 gulp.task("prod", ["md5"])
@@ -270,6 +313,7 @@ gulp.task("watch", function () {
     console.log(files, static)
     gulp.watch(files.views, ["default"])
     gulp.watch(files.css, ["dev-css"])
+    gulp.watch(files.ts, ["dev-ts"])
     gulp.watch(files.module, ["dev-module"])
     gulp.watch(static, ["move-files"])
 })
