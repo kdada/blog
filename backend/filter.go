@@ -20,7 +20,7 @@ func (this *AdminFilter) Filter(context router.RouterContext) bool {
 		if ok && login {
 			obj, ok := c.Session.Value("User")
 			if ok {
-				user, ok := obj.(models.UserDetail)
+				user, ok := obj.(*models.UserDetail)
 				if ok {
 					service, ok := meta.GlobalValueContainer.Value((*services.UserService)(nil))
 					if ok {
