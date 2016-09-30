@@ -5,7 +5,7 @@
     <div id="r{{.Id}}" class="well">
         <div class="media-heading h5">{{.Name}} {{time .CreateTime}} {{.Floor}}楼
             <!--<button class="btn btn-default  btn-xs">回复</button> --></div>
-        {{.Content}}
+        {{tohtml .Content}}
     </div>
     {{end}}
 </div>

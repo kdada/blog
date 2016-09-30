@@ -4,6 +4,8 @@ import (
 	"blog/backend/models"
 	"blog/backend/services"
 	"fmt"
+	"html"
+	"strings"
 
 	"github.com/kdada/tinygo/web"
 )
@@ -27,9 +29,10 @@ func (this *ReplyController) Create(params struct {
 	if ok {
 		var user = obj.(*models.UserDetail)
 		var article, err = this.ArticleService.AvailableArticle(params.Article)
-		fmt.Println(article, err)
 		if err == nil && article != nil && article.Id > 0 {
-			return this.returnPostResult(nil, this.ReplyService.Create(params.Article, params.Reply, user.Id, params.Content))
+			var content = html.EscapeString(params.Content)
+			content = strings.Replace(content, "\n", "<br/>", -1)
+			return this.returnPostResult(nil, this.ReplyService.Create(params.Article, params.Reply, user.Id, content))
 		}
 		//非法请求,禁用用户
 		this.UserSerivce.Ban(user.Id, fmt.Sprint("非法请求:", params))
