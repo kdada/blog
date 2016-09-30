@@ -21,20 +21,32 @@ func routers() router.Router {
 	//文章路由
 	root.AddChild(web.NewFuncRouter(`a{Article=\d+?}.html`, controllers.Article))
 
-	//管理页面
-	var manager = web.NewSpaceRouter("manager")
-	manager.AddChild(web.NewMutableFuncRouter("", controllers.Manager))
-	root.AddChild(manager)
-
 	//非管理员接口
 	var reply = web.NewControllerRouter(new(controllers.ReplyController))
 	reply.AddChild(web.NewFuncRouter("view", controllers.ReplyView))
 	root.AddChild(reply)
 	root.AddChild(web.NewControllerRouter(new(controllers.AccountController)))
-	//管理员接口
-	root.AddChild(web.NewControllerRouter(new(controllers.UserController)))
-	root.AddChild(web.NewControllerRouter(new(controllers.CategoryController)))
-	root.AddChild(web.NewControllerRouter(new(controllers.FileController)))
-	root.AddChild(web.NewControllerRouter(new(controllers.ArticleController)))
+
+	//需登陆接口
+	var loginFilter = new(LoginFilter)
+	var logout, ok = root.Find(router.NewBaseContext("/account/logout"))
+	if !ok {
+		panic("/account/logout路由不存在")
+	}
+	logout.AddPreFilter(loginFilter)
+	create, ok := root.Find(router.NewBaseContext("/reply/create"))
+	if !ok {
+		panic("/reply/create路由不存在")
+	}
+	create.AddPreFilter(loginFilter)
+	//管理员可访问部分
+	var adminFilter = new(AdminFilter)
+	var manager = web.NewSpaceRouter("manager").AddPreFilter(adminFilter)
+	manager.AddChild(web.NewMutableFuncRouter("", controllers.Manager))
+	root.AddChild(manager)
+	root.AddChild(web.NewControllerRouter(new(controllers.UserController)).AddPreFilter(adminFilter))
+	root.AddChild(web.NewControllerRouter(new(controllers.CategoryController)).AddPreFilter(adminFilter))
+	root.AddChild(web.NewControllerRouter(new(controllers.FileController)).AddPreFilter(adminFilter))
+	root.AddChild(web.NewControllerRouter(new(controllers.ArticleController)).AddPreFilter(adminFilter))
 	return root
 }

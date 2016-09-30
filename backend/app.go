@@ -14,5 +14,6 @@ func NewApp() tinygo.App {
 	if err != nil {
 		panic(err)
 	}
+	app.Processor.Event = new(ProcessorEvent)
 	return app
 }
