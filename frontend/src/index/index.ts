@@ -19,7 +19,23 @@
         $("#loginButton").click(Login)
         $("#regButton").click(Register)
         $("#searchButton").click(Search)
+
+        OnEnter("#loginEmail", "#loginPassword", "focus")
+        OnEnter("#loginPassword", "#loginButton", "click")
+        OnEnter("#regEmail", "#regName", "focus")
+        OnEnter("#regName", "#regPassword", "focus")
+        OnEnter("#regPassword", "#regCnfPassword", "focus")
+        OnEnter("#regCnfPassword", "#regButton", "click")
     })
+
+    // OnEnter 当trigger触发Enter时调用target的operation操作
+    function OnEnter(trigger: string, target: string, operation: string) {
+        $(trigger).keydown(function (e) {
+            if (e.keyCode == 13) {
+                $(target)[operation]()
+            }
+        })
+    }
 
     // Validate 修改ele元素的验证状态
     function Validate(ele: HTMLInputElement, v: boolean) {
