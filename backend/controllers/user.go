@@ -35,7 +35,7 @@ func (this *UserController) ListNum() web.PostResult {
 func (this *UserController) Ban(params struct {
 	User int `!;>0` //用户id
 }) web.PostResult {
-	return this.returnPostResult(nil, this.UserService.Ban(params.User))
+	return this.returnPostResult(nil, this.UserService.Ban(params.User, "管理员操作"))
 }
 
 // Unban 允许登陆

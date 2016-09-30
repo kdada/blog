@@ -1,13 +1,18 @@
 package services
 
 import (
+	"math/rand"
+	"time"
+
 	"github.com/kdada/tinygo/sql"
 
 	"github.com/kdada/tinygo/meta"
 )
 
-// 注册服务
 func init() {
+	//随机数初始化
+	rand.Seed(time.Now().UnixNano())
+	// 注册服务
 	meta.GlobalValueContainer.Register(nil, func() *sql.DB {
 		return sql.OpenDefault()
 	})

@@ -26,7 +26,12 @@ func routers() router.Router {
 	manager.AddChild(web.NewMutableFuncRouter("", controllers.Manager))
 	root.AddChild(manager)
 
-	//接口
+	//非管理员接口
+	var reply = web.NewControllerRouter(new(controllers.ReplyController))
+	reply.AddChild(web.NewFuncRouter("view", controllers.ReplyView))
+	root.AddChild(reply)
+	root.AddChild(web.NewControllerRouter(new(controllers.AccountController)))
+	//管理员接口
 	root.AddChild(web.NewControllerRouter(new(controllers.UserController)))
 	root.AddChild(web.NewControllerRouter(new(controllers.CategoryController)))
 	root.AddChild(web.NewControllerRouter(new(controllers.FileController)))

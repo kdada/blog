@@ -1,0 +1,34 @@
+{{define "Content"}}
+{{if gt .TotalPages 0}}
+<div class="reply-content">
+    {{range .Replies}}
+    <div id="r{{.Id}}" class="well">
+        <div class="media-heading h5">{{.Name}} {{time .CreateTime}} {{.Floor}}楼
+            <!--<button class="btn btn-default  btn-xs">回复</button> --></div>
+        {{.Content}}
+    </div>
+    {{end}}
+</div>
+<nav class="text-center">
+    <ul class="pagination">
+        <li {{if eq .CurrentPage 1}}class="disabled" {{end}}>
+            <a aria-label="Previous" data-page="{{1}}">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {{$G := .}} {{range $k,$v := until .StartPage .EndPage}}
+        <li {{if eq $v $G.CurrentPage}}class="active" {{end}}><a data-page="{{$v}}">{{$v}}</a></li>
+        {{end}}
+        <li {{if eq .CurrentPage .TotalPages}}class="disabled" {{end}}>
+            <a aria-label="Next" data-page="{{.TotalPages}}">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+{{else}}
+<div class="well">
+    暂无评论
+</div>
+{{end}}
+{{end}}

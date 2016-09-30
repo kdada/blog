@@ -22,8 +22,8 @@
 </div>
 {{$login := .SESSION.Bool "Login"}}
 <div class="h3">评论列表 {{if $login}}<button class="btn btn-default  btn-xs" id="ShowReply">发表评论</button>{{end}}</div>
-<div class="reply">
-  {{if gt .ReplyPages 0}}
+<div class="reply" data-article="{{.Article.Id}}">
+  {{if gt .TotalPages 0}}
   <div class="reply-content">
     {{range .Replies}}
     <div id="r{{.Id}}" class="well">
@@ -34,7 +34,20 @@
     {{end}}
   </div>
   <nav class="text-center">
-    <ul class="pagination" data-article="{{.Article.Id}}" data-pages="{{.ReplyPages}}" data-current="{{if .CurrentPage}}{{.CurrentPage}}{{else}}1{{end}}">
+    <ul class="pagination">
+      <li {{if eq .CurrentPage 1}}class="disabled" {{end}}>
+        <a aria-label="Previous" data-page="{{1}}">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {{$G := .}} {{range $k,$v := until .StartPage .EndPage}}
+      <li {{if eq $v $G.CurrentPage}}class="active" {{end}}><a data-page="{{$v}}">{{$v}}</a></li>
+      {{end}}
+      <li {{if eq .CurrentPage .TotalPages}}class="disabled" {{end}}>
+        <a aria-label="Next" data-page="{{.TotalPages}}">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
     </ul>
   </nav>
   {{else}}
@@ -68,9 +81,7 @@
     </div>
   </div>
 </div>
-{{end}} 
-{{end}}
-{{define "Footer"}}
+{{end}} {{end}} {{define "Footer"}}
 <!-- build:article-ts -->
 <script src="/src/index/article.ts"></script>
 <script src="/src/index/page.ts"></script>
