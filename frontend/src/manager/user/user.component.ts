@@ -13,6 +13,7 @@ export class UserComponent {
     private currentNum: number
     private users: UserDetail[]
     constructor(private userService: UserService) {
+        this.currentNum = 1
         userService.ListNum().then(v => {
             this.pages = v
             if (v > 0) {

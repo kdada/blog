@@ -15,6 +15,7 @@ export class FileComponent {
     private dialog: boolean
     constructor(private fileService: FileService) {
         this.dialog = false
+        this.currentNum = 1
         fileService.ListNum().then(v => {
             this.pages = v
             if (v > 0) {

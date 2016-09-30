@@ -14,6 +14,7 @@ export class ArticleComponent {
     private currentNum: number
     private articles: ArticleDetail[]
     constructor(private route: ActivatedRoute, private articleService: ArticleService) {
+        this.currentNum = 1
         route.params.forEach(p => {
             this.category = p["category"]
         })

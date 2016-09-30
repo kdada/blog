@@ -16,6 +16,7 @@ export class CategoryComponent {
     private createError: string
     constructor(private categoryService: CategoryService) {
         this.dialog = false
+        this.currentNum = 1
         categoryService.ListNum().then(v => {
             this.pages = v
             if (v > 0) {
