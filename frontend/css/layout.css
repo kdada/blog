@@ -79,10 +79,6 @@ img {
     max-width: 100%;
 }
 
-.markdown-hidden {
-    display: none;
-}
-
 /*默认样式调整*/
 .panel {
     border-radius: 0;

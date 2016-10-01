@@ -40,12 +40,6 @@ import { MarkdownString } from '../common/markdown';
             var mdC = $(ele)
             mdC.html("")
             mdC.append(mdEle)
-            var height = mdC.outerHeight()
-            mdC.height(0)
-            mdC.removeClass("markdown-hidden")
-            mdC.animate({
-                height: height + 'px',
-            }, 200)
         })
     })
 
