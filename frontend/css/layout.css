@@ -1,3 +1,4 @@
+/*博客样式*/
 .blog-navbar {
     background-color: #303535;
     border-radius: 0px;
@@ -46,3 +47,51 @@
     background-color: #fdfdfd;
 }
 
+/*链接样式*/
+.blog-footer a {
+    text-decoration: none;
+    color: white;
+}
+
+.blog-footer a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.blog-list a {
+    color: black;
+}
+
+.blog-summary a {
+    text-decoration: none;
+    color: black;
+}
+
+.blog-summary a:hover {
+    text-decoration: none;
+}
+
+#replyContent {
+    height: 150px;
+}
+
+/*默认样式调整*/
+.panel {
+    border-radius: 0;
+}
+
+.panel-heading {
+    padding: 5px 10px;
+}
+
+.blog-summary .panel-heading {
+    padding: 10px 15px;
+}
+
+.panel-default > .panel-heading {
+    background-color: white;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: black;
+}

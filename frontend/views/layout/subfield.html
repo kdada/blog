@@ -30,7 +30,7 @@
                     {{range $k,$v := .NewestReplies}}
                     <li>{{$v.Name}} 说:
                         <!--<a href="/a{{$v.Article}}.html">{{$v.Title}}</a><br/>-->
-                        <a class="blog-text-hidden" href="/a{{$v.Article}}.html#r{{$v.Id}}">{{$v.Content}}</a>
+                        <a class="blog-text-hidden" href="/a{{$v.Article}}.html#r{{$v.Id}}">{{tohtml $v.Content}}</a>
                     </li>
                     {{end}}
                 </ul>

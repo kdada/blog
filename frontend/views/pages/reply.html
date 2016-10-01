@@ -12,15 +12,15 @@
 <nav class="text-center">
     <ul class="pagination">
         <li {{if eq .CurrentPage 1}}class="disabled" {{end}}>
-            <a aria-label="Previous" data-page="{{1}}">
+            <a href="#" aria-label="Previous" data-page="{{1}}">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
         {{$G := .}} {{range $k,$v := until .StartPage .EndPage}}
-        <li {{if eq $v $G.CurrentPage}}class="active" {{end}}><a data-page="{{$v}}">{{$v}}</a></li>
+        <li {{if eq $v $G.CurrentPage}}class="active" {{end}}><a href="#" data-page="{{$v}}">{{$v}}</a></li>
         {{end}}
         <li {{if eq .CurrentPage .TotalPages}}class="disabled" {{end}}>
-            <a aria-label="Next" data-page="{{.TotalPages}}">
+            <a href="#" aria-label="Next" data-page="{{.TotalPages}}">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>

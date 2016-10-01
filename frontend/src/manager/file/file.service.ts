@@ -41,7 +41,6 @@ export class FileService {
     Upload(form: HTMLFormElement) {
         return new Promise<string>((resolve, reject) => {
             var formData = new FormData(form)
-            console.log(formData)
             var xhr = new XMLHttpRequest()
             xhr.open("post", "/file/upload", true)
             xhr.onreadystatechange = e => {

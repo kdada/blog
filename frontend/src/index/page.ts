@@ -28,9 +28,8 @@
 
     // RegisterReply 注册评论按钮事件
     function RegisterReply() {
-        $("#ShowReply").click(function () {
-            $("#replyUser").val("0")
-            $("#replyDialog").modal("show")
+        $('#replyDialog').on('shown.bs.modal', function (e) {
+            $("#replyContent").focus()
         })
         $("#replyButton").click(function () {
             //评论

@@ -21,7 +21,7 @@ func NewReplyService() *ReplyService {
 // NewestReplies 获取最新评论
 func (this *ReplyService) NewestReplies() (replies []*models.ReplyDetail, err error) {
 	_, err = this.DB.Query(`
-select r.id,r.article,r.account,left(r.content,20) as  content,r.create_time,a.title,c.name from
+select r.id,r.article,r.account,substr(regexp_replace(r.content,'<br/>.*$',''),0,50) as  content,r.create_time,a.title,c.name from
 article a,account c,
 (select *
 from reply
@@ -29,6 +29,7 @@ where status = 1
 order by id desc
 limit 10) r
 where a.id = r.article and c.id = r.account
+order by r.id desc
 `).Scan(&replies)
 	return
 }

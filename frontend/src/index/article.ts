@@ -1,7 +1,7 @@
 import { MarkdownString } from '../common/markdown';
 
 $(document).ready(function () {
-    // 对文章的markdown进行处理
+    // 对文章的markdown进行处理    
     var height = $(document).scrollTop()
     var md = $(".markdown-body")
     var oldHeight = md.outerHeight()

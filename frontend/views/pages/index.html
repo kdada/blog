@@ -2,7 +2,7 @@
 {{if gt .TotalPages 0}}
 <div>
     {{range .Articles}}
-    <div class="panel panel-default">
+    <div class="panel panel-default blog-summary">
         <div class="panel-heading">
             <h3 class="panel-title">{{if .IsTop}}<span class="glyphicon glyphicon-fire"></span>{{end}}<a href="/a{{.Id}}.html"> {{.Title}}</a></h3>
             <div class="text-muted blog-subtitle">发表时间:{{time .CreateTime}}</div>

@@ -41,6 +41,7 @@ export class FileComponent {
     Upload(form: HTMLFormElement) {
         this.fileService.Upload(form).then(s => {
             this.dialog = false
+            this.ShowPage(this.currentNum)
         })
     }
 

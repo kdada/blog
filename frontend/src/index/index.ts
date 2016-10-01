@@ -1,4 +1,4 @@
-
+import { MarkdownString } from '../common/markdown';
 
 
 
@@ -26,6 +26,20 @@
         OnEnter("#regName", "#regPassword", "focus")
         OnEnter("#regPassword", "#regCnfPassword", "focus")
         OnEnter("#regCnfPassword", "#regButton", "click")
+
+        $('#loginDialog').on('shown.bs.modal', function (e) {
+            $("#loginEmail").focus()
+        })
+
+        $('#regDialog').on('shown.bs.modal', function (e) {
+            $("#regEmail").focus()
+        })
+
+        $(".article-summary").each(function(i,ele) {
+            var mdEle = MarkdownString(ele.innerHTML)
+            ele.innerHTML = ""
+            ele.appendChild(mdEle)
+        })
     })
 
     // OnEnter 当trigger触发Enter时调用target的operation操作
