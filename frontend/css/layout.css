@@ -75,6 +75,14 @@
     height: 150px;
 }
 
+img {
+    max-width: 100%;
+}
+
+.markdown-hidden {
+    display: none;
+}
+
 /*默认样式调整*/
 .panel {
     border-radius: 0;
@@ -95,3 +103,4 @@
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
     background-color: black;
 }
+

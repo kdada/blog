@@ -32,7 +32,7 @@ func (this *ArticleService) AvailableNum() (count int, err error) {
 
 // ListAvailable 列出指定页码的处于正常状态的文章
 func (this *ArticleService) ListAvailable(page int, count int) (details []*models.ArticleDetail, err error) {
-	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,100) as content,a.category,c.name,
+	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,200) as content,a.category,c.name,
 	a.top,a.create_time,a.update_time,a.status
 	from blog.article a,blog.category c
 	where a.status = 1 and a.category = c.id
@@ -55,7 +55,7 @@ func (this *ArticleService) ArticleNum() (count int, err error) {
 
 // ListAll 列出指定页码的处于正常状态和隐藏状态的文章
 func (this *ArticleService) ListAll(page int, count int) (details []*models.ArticleDetail, err error) {
-	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,100) as content,a.category,c.name,
+	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,200) as content,a.category,c.name,
 	a.top,a.create_time,a.update_time,a.status
 	from article a,category c
 	where (a.status = 1 or a.status = 2) and a.category = c.id
@@ -78,7 +78,7 @@ func (this *ArticleService) SpecAvailableNum(category int) (count int, err error
 
 // ListSpecAvailable 列出指定页码的处于正常状态的文章
 func (this *ArticleService) ListSpecAvailable(category int, page int, count int) (details []*models.ArticleDetail, err error) {
-	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,100) as content,a.category,c.name,
+	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,200) as content,a.category,c.name,
 	a.top,a.create_time,a.update_time,a.status
 	from blog.article a,blog.category c
 	where category = $3 and a.status = 1 and a.category = c.id
@@ -89,7 +89,7 @@ func (this *ArticleService) ListSpecAvailable(category int, page int, count int)
 
 // ListSpec 列出指定页码的处于正常状态和隐藏状态的文章
 func (this *ArticleService) ListSpec(category int, page int, count int) (details []*models.ArticleDetail, err error) {
-	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,100) as content,a.category,c.name,
+	_, err = this.DB.Query(`select a.id,a.title,substr(content,0,200) as content,a.category,c.name,
 	a.top,a.create_time,a.update_time,a.status
 	from blog.article a,blog.category c
 	where category = $3 and (a.status = 1 or a.status = 2) and a.category = c.id

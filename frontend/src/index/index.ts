@@ -35,10 +35,17 @@ import { MarkdownString } from '../common/markdown';
             $("#regEmail").focus()
         })
 
-        $(".article-summary").each(function(i,ele) {
+        $(".article-summary").each(function (i, ele) {
             var mdEle = MarkdownString(ele.innerHTML)
-            ele.innerHTML = ""
-            ele.appendChild(mdEle)
+            var mdC = $(ele)
+            mdC.html("")
+            mdC.append(mdEle)
+            var height = mdC.outerHeight()
+            mdC.height(0)
+            mdC.removeClass("markdown-hidden")
+            mdC.animate({
+                height: height + 'px',
+            }, 200)
         })
     })
 
