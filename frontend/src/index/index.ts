@@ -1,4 +1,4 @@
-import { MarkdownString } from '../common/markdown';
+// import { MarkdownString } from '../common/markdown';
 
 
 
@@ -35,12 +35,12 @@ import { MarkdownString } from '../common/markdown';
             $("#regEmail").focus()
         })
 
-        $(".article-summary").each(function (i, ele) {
-            var mdEle = MarkdownString(ele.innerHTML)
-            var mdC = $(ele)
-            mdC.html("")
-            mdC.append(mdEle)
-        })
+        // $(".article-summary").each(function (i, ele) {
+        //     var mdEle = MarkdownString(ele.innerHTML)
+        //     var mdC = $(ele)
+        //     mdC.html("")
+        //     mdC.append(mdEle)
+        // })
     })
 
     // OnEnter 当trigger触发Enter时调用target的operation操作

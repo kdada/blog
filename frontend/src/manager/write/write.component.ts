@@ -81,9 +81,24 @@ export class WriteComponent {
         }
     }
 
+    // Parse 解析content并生成summary和html
+    Parse() {
+        var ele = MarkdownString(this.content)
+        var html = ele.outerHTML
+        while (ele.children.length > 5) {
+            ele.removeChild(ele.lastChild)
+        }
+        var summary = ele.outerHTML
+        return {
+            summary:summary,
+            html:html
+        }
+    }
+
     // Create 创建文章
     Create() {
-        this.writeService.Create(this.category, this.title, this.content).then(v => {
+        var result = this.Parse()
+        this.writeService.Create(this.category, this.title, this.content, result.summary, result.html).then(v => {
             if (v > 0) {
                 this.router.navigateByUrl("/write/" + v)
             } else {
@@ -94,7 +109,8 @@ export class WriteComponent {
 
     // Update 更新文章
     Update() {
-        this.writeService.Update(this.article, this.category, this.title, this.content).then(v => {
+        var result = this.Parse()
+        this.writeService.Update(this.article, this.category, this.title, this.content, result.summary, result.html).then(v => {
             this.ShowMessage(v ? "更新成功" : "更新失败")
         })
     }

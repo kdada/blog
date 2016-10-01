@@ -2,6 +2,7 @@ package models
 
 import (
 	"time"
+	"unicode/utf8"
 )
 
 // 文章创建信息
@@ -9,12 +10,25 @@ type ArticleInfo struct {
 	Category int    `!;>0`                //文章分类Id
 	Title    string `!;clen>=2&&clen<=20` //文章标题
 	Content  string `!;clen>=2`           //文章内容
+	Summary  string //文章概览
+	Html     string //文章html内容
+}
+
+// Validate 验证字段
+func (this *ArticleInfo) Validate() bool {
+	var titleLen = utf8.RuneCountInString(this.Title)
+	return this.Category > 0 && titleLen >= 2 && titleLen <= 20 && utf8.RuneCountInString(this.Content) >= 2
 }
 
 // 文章修改信息
 type ArticleData struct {
 	ArticleInfo
 	Id int `!;>0` //文章id
+}
+
+// Validate 验证字段
+func (this *ArticleData) Validate() bool {
+	return this.Id > 0 && this.ArticleInfo.Validate()
 }
 
 // 文章概要

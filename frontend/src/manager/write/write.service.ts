@@ -39,13 +39,15 @@ export class WriteService {
         })
     }
 
-    // Create 创建
-    Create(category: number, title: string, content: string) {
-        return this.http.post("/article/create", SearchParams({
-            Category: category,
+    // Create 创建 json格式提交
+    Create(category: number, title: string, content: string, summary: string, html: string) {
+        return this.http.post("/article/create", {
+            Category: category-0,
             Title: title,
-            Content: content
-        })).toPromise().then(resp => {
+            Content: content,
+            Summary: summary,
+            Html: html
+        }).toPromise().then(resp => {
             if (resp.ok) {
                 var obj = resp.json()
                 if (obj.Code == 0) {
@@ -56,14 +58,16 @@ export class WriteService {
         })
     }
 
-    // Update 更新
-    Update(id: number, category: number, title: string, content: string) {
-        return this.http.post("/article/update", SearchParams({
-            Id: id,
-            Category: category,
+    // Update 更新 json格式提交
+    Update(id: number, category: number, title: string, content: string, summary: string, html: string) {
+        return this.http.post("/article/update", {
+            Id: id-0,
+            Category: category-0,
             Title: title,
-            Content: content
-        })).toPromise().then(resp => {
+            Content: content,
+            Summary: summary,
+            Html: html
+        }).toPromise().then(resp => {
             if (resp.ok) {
                 var obj = resp.json()
                 return obj.Code == 0

@@ -1,9 +1,6 @@
 package models
 
-import (
-	"regexp"
-	"strconv"
-)
+import "regexp"
 
 // 成功返回结果,Code为0
 type SuccessResult struct {
@@ -30,22 +27,26 @@ var regErr = regexp.MustCompile(`^[a-zA-Z\d]+?\(([A-Z])(\d+)\):(.+?)$`)
 
 // NewErrorResult 根据err返回结果,err需要符合Error的错误格式
 func NewErrorResult(err error) *FailureResult {
-	var v = regErr.FindStringSubmatch(err.Error())
-	if len(v) == 4 {
-		//格式符合要求
-		var codeStr = v[2]
-		var code, _ = strconv.Atoi(codeStr)
-		var prefix = int(v[1][0])
-		for i := 0; i < len(codeStr); i++ {
-			prefix *= 10
-		}
-		code += prefix
-		return &FailureResult{code, v[3]}
-	}
-	// 开发环境方便调试直接返回错误
-	return &FailureResult{1000, err.Error()}
+	//	if err != nil {
+	//		var v = regErr.FindStringSubmatch(err.Error())
+	//		if len(v) == 4 {
+	//			//格式符合要求
+	//			var codeStr = v[2]
+	//			var code, _ = strconv.Atoi(codeStr)
+	//			var prefix = int(v[1][0])
+	//			for i := 0; i < len(codeStr); i++ {
+	//				prefix *= 10
+	//			}
+	//			code += prefix
+	//			return &FailureResult{code, v[3]}
+	//		}
+	//		// 开发环境方便调试直接返回错误
+	//		return &FailureResult{1000, err.Error()}
+	//	} else {
+	//		return FailureInternal
+	//	}
 	// 生产环境应当返回FailureInternal
-	//return FailureInternal
+	return FailureInternal
 
 }
 

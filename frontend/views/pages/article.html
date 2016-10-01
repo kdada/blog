@@ -1,6 +1,6 @@
  {{define "Content"}}
 <h1>{{.Article.Title}}</h1>
-<article class="markdown-body">{{.Article.Content}}</article>
+<article class="markdown-body">{{tohtml .Article.Content}}</article>
 <p></p>
 <p></p>
 <div class="alert alert-success" role="alert">
@@ -81,7 +81,6 @@
 </div>
 {{end}} {{end}} {{define "Footer"}}
 <!-- build:article-ts -->
-<script src="/src/index/article.ts"></script>
 <script src="/src/index/page.ts"></script>
 <!-- endbuild -->
 {{end}}

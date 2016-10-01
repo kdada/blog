@@ -3,6 +3,8 @@ package controllers
 import (
 	"blog/backend/models"
 	"blog/backend/services"
+	"encoding/json"
+	"io/ioutil"
 
 	"github.com/kdada/tinygo/web"
 )
@@ -56,21 +58,43 @@ func (this *ArticleController) Article(params struct {
 	return this.returnPostResult(this.ArticleService.Article(params.Article))
 }
 
-// Create 创建一篇文章并返回文章id
-func (this *ArticleController) Create(article *models.ArticleInfo) web.PostResult {
-	var id, err = this.ArticleService.Create(article)
-	var result interface{} = nil
+// jsonRequest 处理json格式的请求
+func (this *ArticleController) jsonRequest(obj interface{}) error {
+	var all, err = ioutil.ReadAll(this.Context.HttpContext.Request.Body)
 	if err == nil {
-		result = map[string]int{
-			"Id": id,
+		return json.Unmarshal(all, obj)
+	}
+	return err
+}
+
+// Create 创建一篇文章并返回文章id
+func (this *ArticleController) Create() web.PostResult {
+	var article = new(models.ArticleInfo)
+	var err = this.jsonRequest(article)
+	var result interface{}
+	if err == nil {
+		if article.Validate() {
+			var id = 0
+			id, err = this.ArticleService.Create(article)
+			if err == nil {
+				result = map[string]int{
+					"Id": id,
+				}
+				return this.Context.Json(models.NewSuccessResult(result))
+			}
 		}
 	}
-	return this.returnPostResult(result, err)
+	return this.Context.Json(models.NewErrorResult(err))
 }
 
 // Update 更新一篇文章
-func (this *ArticleController) Update(article *models.ArticleData) web.PostResult {
-	return this.returnPostResult(nil, this.ArticleService.Update(article))
+func (this *ArticleController) Update() web.PostResult {
+	var article = new(models.ArticleData)
+	var err = this.jsonRequest(article)
+	if err == nil && article.Validate() {
+		return this.returnPostResult(nil, this.ArticleService.Update(article))
+	}
+	return this.Context.Json(models.NewErrorResult(err))
 }
 
 // Move 移动到新的分类

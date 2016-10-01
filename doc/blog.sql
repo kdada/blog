@@ -53,6 +53,8 @@ create table blog.article (
     category integer not null,
     title varchar(1000) not null,
     content text not null,
+    summary text not null,
+    html text not null,
     top integer not null default 0,
     create_time timestamp with time zone not null default now(),
     update_time timestamp with time zone not null default now(),
@@ -63,6 +65,8 @@ comment on table blog.article is '文章表';
 comment on column blog.article.id is '文章id';
 comment on column blog.article.title is '文章标题';
 comment on column blog.article.content is '文章内容';
+comment on column blog.article.content is '文章概览';
+comment on column blog.article.content is '文章html内容';
 comment on column blog.article.top is '置顶数';
 comment on column blog.article.create_time is '创建时间';
 comment on column blog.article.update_time is '更新时间';
