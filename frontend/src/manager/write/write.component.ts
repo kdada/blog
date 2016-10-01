@@ -134,7 +134,7 @@ export class WriteComponent {
                 var ele = <HTMLTextAreaElement>this.editor.nativeElement
                 var pos = ele.selectionStart
                 ele.value = ele.value.substr(0, pos) + str + ele.value.substr(pos)
-                ele.selectionStart = pos + inPos
+                ele.selectionStart = ele.selectionEnd = pos + inPos
                 ele.focus()
             }
         })
