@@ -32,6 +32,11 @@
             $("#replyContent").focus()
         })
         $("#replyButton").click(function () {
+            var content = <string>$("#replyContent").val()
+            if (content.length < 2 || content.length > 1000) {
+                $("#replyContent").focus()
+                return
+            }
             //评论
             $.ajax({
                 url: "/reply/create",
@@ -39,7 +44,7 @@
                 data: {
                     "Article": $("#replyArticle").val(),
                     "Reply": $("#replyUser").val(),
-                    "Content": $("#replyContent").val(),
+                    "Content": content,
                 },
                 success: function (data) {
                     $("#replyDialog").modal("hide")

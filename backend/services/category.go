@@ -11,13 +11,14 @@ type CategoryService struct {
 	DB *sql.DB
 }
 
-func (this *CategoryService) Exist(category int) (bool, error) {
-	var count int
-	var _, err = this.DB.Query("select count(*) from category where id = $1 and status = 1", category).Scan(&count)
+// AvailableCategory 返回存在的分类,不存在则返回nil
+func (this *CategoryService) AvailableCategory(category int) (*models.CategoryDetail, error) {
+	var detail *models.CategoryDetail
+	var count, err = this.DB.Query("select * from category where id = $1 and status = 1", category).Scan(&detail)
 	if count == 1 {
-		return true, nil
+		return detail, nil
 	}
-	return false, err
+	return nil, err
 }
 
 // AvailableNum 返回可见分类总数

@@ -33,7 +33,7 @@ func layoutViewData(pkg *ServicePackage) (web.ViewData, error) {
 }
 
 // Common 公共列表页面生成方法
-func Common(context *web.Context, pkg *ServicePackage, list []*models.ArticleDetail, firstUrl string, baseUrl string, currentPage int, totalPages int) web.GetResult {
+func Common(context *web.Context, pkg *ServicePackage, title string, list []*models.ArticleDetail, firstUrl string, baseUrl string, currentPage int, totalPages int) web.GetResult {
 	var data, err = layoutViewData(pkg)
 	if err != nil {
 		context.Processor.Logger.Error(err)
@@ -62,6 +62,7 @@ func Common(context *web.Context, pkg *ServicePackage, list []*models.ArticleDet
 	}
 	data["StartPage"] = start
 	data["EndPage"] = end
+	data["Title"] = title
 	return context.View("pages/index.html", data)
 }
 
@@ -86,7 +87,7 @@ func Index(context *web.Context, pkg *ServicePackage, params struct {
 			return context.NotFound()
 		}
 	}
-	return Common(context, pkg, list, "/", "/p", params.Page, totalPages)
+	return Common(context, pkg, "", list, "/", "/p", params.Page, totalPages)
 }
 
 // Category 分类列表
@@ -94,8 +95,8 @@ func Category(context *web.Context, pkg *ServicePackage, params struct {
 	Category int `!;>0`
 	Page     int `?;>0`
 }) web.GetResult {
-	var exist, err = pkg.CategoryService.Exist(params.Category)
-	if !exist || err != nil {
+	var category, err = pkg.CategoryService.AvailableCategory(params.Category)
+	if category == nil || err != nil {
 		context.Processor.Logger.Error(err)
 		return context.NotFound()
 	}
@@ -117,7 +118,7 @@ func Category(context *web.Context, pkg *ServicePackage, params struct {
 		}
 	}
 	var base = "/c" + strconv.Itoa(params.Category)
-	return Common(context, pkg, list, base, base+"/p", params.Page, totalPages)
+	return Common(context, pkg, category.Name, list, base, base+"/p", params.Page, totalPages)
 }
 
 // CalculateReply 计算回复相关内容

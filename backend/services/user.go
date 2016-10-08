@@ -56,11 +56,11 @@ func (this *UserService) Check(email string, password string) (*models.UserDetai
 func (this *UserService) Add(email string, name string, password string) error {
 	var count int
 	var _, err = this.DB.Query("select count(*) from account where email = $1", email).Scan(&count)
-	if count > 0 && err != nil {
+	if count > 0 || err != nil {
 		return ErrorRepeatedEmail.Error()
 	}
 	_, err = this.DB.Query("select count(*) from account where name = $1", name).Scan(&count)
-	if count > 0 && err != nil {
+	if count > 0 || err != nil {
 		return ErrorRepeatedName.Error()
 	}
 	var pwd, salt = GeneratePassword(password, email)
