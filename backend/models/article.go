@@ -7,9 +7,9 @@ import (
 
 // 文章创建信息
 type ArticleInfo struct {
-	Category int    `!;>0`                //文章分类Id
-	Title    string `!;clen>=2&&clen<=20` //文章标题
-	Content  string `!;clen>=2`           //文章内容
+	Category int    `!;>0`                 //文章分类Id
+	Title    string `!;clen>=2&&clen<=200` //文章标题
+	Content  string `!;clen>=2`            //文章内容
 	Summary  string //文章概览
 	Html     string //文章html内容
 }
@@ -17,7 +17,7 @@ type ArticleInfo struct {
 // Validate 验证字段
 func (this *ArticleInfo) Validate() bool {
 	var titleLen = utf8.RuneCountInString(this.Title)
-	return this.Category > 0 && titleLen >= 2 && titleLen <= 20 && utf8.RuneCountInString(this.Content) >= 2
+	return this.Category > 0 && titleLen >= 2 && titleLen <= 200 && utf8.RuneCountInString(this.Content) >= 2
 }
 
 // 文章修改信息

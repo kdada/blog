@@ -62,8 +62,8 @@ export class WriteComponent {
 
     // Save 保存文章,根据情况选择创建或更新
     Save() {
-        if (this.title.length < 2 || this.title.length > 20) {
-            this.ShowMessage("标题长度必须在2-20之间")
+        if (this.title.length < 2 || this.title.length > 200) {
+            this.ShowMessage("标题长度必须在2-200之间")
             return
         }
         if (this.category <= 0) {
