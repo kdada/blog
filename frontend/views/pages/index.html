@@ -7,7 +7,7 @@
             <h3 class="panel-title">{{if .IsTop}}<span class="glyphicon glyphicon-fire"></span>{{end}}<a href="/a{{.Id}}.html"> {{.Title}}</a></h3>
             <div class="text-muted blog-subtitle">发表时间:{{time .CreateTime}}</div>
         </div>
-        <a href="/a{{.Id}}.html"><div class="panel-body article-summary markdown-body">{{tohtml .Content}}</div></a>
+        <div class="panel-body article-summary markdown-body" data-target="/a{{.Id}}.html">{{tohtml .Content}}</div>
     </div>
     {{end}}
 </div>

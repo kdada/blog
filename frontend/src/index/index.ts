@@ -41,6 +41,11 @@
         //     mdC.html("")
         //     mdC.append(mdEle)
         // })
+        var click = function(){
+            location.href = $(this).data('target')
+        }
+        $('.article-summary').click(click)
+        $('.article-summary').on('tap',click)
     })
 
     // OnEnter 当trigger触发Enter时调用target的operation操作
