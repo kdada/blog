@@ -1,0 +1,22 @@
+{
+  "libs": [
+    "browser",
+    "jquery"
+  ],
+  "plugins": {
+    "complete_strings": {},
+    "node": {},
+    "modules": {},
+    "es_modules":{},
+    "complete_strings": {},
+    "requirejs": {},
+    "doc_comment": {
+      "fullDocs": true
+    }
+  },
+  "loadEagerly": [
+    "web/**/*.js",
+    "backend/**/*.js"
+  ],
+  "ecmaVersion": 8
+}

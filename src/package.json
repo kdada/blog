@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "koa": "^2.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.12.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-react": "^7.5.1",
+    "prettier": "^1.8.2"
+  },
+  "scripts": {
+    "start": "babel-node ./backend/index.js --presets es2015,stage-2"
+  }
+}
